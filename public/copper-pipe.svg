@@ -1,0 +1,16 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="50" y="100" width="300" height="100" rx="50" fill="url(#copperGradient)"/>
+  <rect x="70" y="120" width="260" height="60" rx="30" fill="url(#innerGradient)" opacity="0.8"/>
+  <rect x="60" y="110" width="280" height="20" rx="10" fill="white" opacity="0.2"/>
+  <defs>
+    <linearGradient id="copperGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b87333"/>
+      <stop offset="50%" stop-color="#d4924a"/>
+      <stop offset="100%" stop-color="#b87333"/>
+    </linearGradient>
+    <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5a2b"/>
+      <stop offset="100%" stop-color="#a0522d"/>
+    </linearGradient>
+  </defs>
+</svg>
