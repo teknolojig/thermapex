@@ -205,7 +205,7 @@ export function Header() {
                     className="text-center mb-8"
                   >
                     <img src="/logo.svg" alt="Thermapex Logo" className="h-16 w-auto mx-auto mb-4" />
-                    <p className="text-lg text-muted-foreground">Türkiye'nin Güvenilir Bakır Boru Üreticisi</p>
+                    <p className="text-lg text-muted-foreground">Türkiye&apos;nin Güvenilir Bakır Boru Üreticisi</p>
                   </motion.div>
 
                   <div className="space-y-6 text-center w-full max-w-sm">

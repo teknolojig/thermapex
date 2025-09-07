@@ -126,7 +126,7 @@ export function HeroSection() {
             >
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">
-                Türkiye'nin Güvenilir Bakır Boru Üreticisi
+                Türkiye&apos;nin Güvenilir Bakır Boru Üreticisi
               </span>
             </motion.div>
 
