@@ -1,0 +1,14 @@
+# Robots.txt for Thermapex
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# Sitemap
+Sitemap: https://thermapex.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

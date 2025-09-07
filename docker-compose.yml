@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/prisma/prod.db
+      - NEXTAUTH_SECRET=thermapex-secret-key-2024-bakir-sistemleri
+      - NEXTAUTH_URL=http://localhost:3000
+      - JWT_SECRET=thermapex-jwt-secret-2024
+    volumes:
+      - ./prisma/prod.db:/app/prisma/prod.db
+      - ./public/uploads:/app/public/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Optional: PostgreSQL for production
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     - POSTGRES_USER=thermapex
+  #     - POSTGRES_PASSWORD=thermapex_password
+  #     - POSTGRES_DB=thermapex
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
