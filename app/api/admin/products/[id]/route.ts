@@ -89,6 +89,7 @@ export async function PUT(
         metaTitle: metaTitle || null,
         metaDescription: metaDescription || null,
         metaKeywords: metaKeywords || null,
+        updatedAt: new Date(),
       },
     });
 

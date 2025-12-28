@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
 
     const product = await prisma.products.create({
       data: {
+        id: `prod-${Date.now()}`,
         categoryId,
         name,
         code,
@@ -72,6 +73,7 @@ export async function POST(request: NextRequest) {
         featured: featured || false,
         active: active !== undefined ? active : true,
         order: order || 0,
+        updatedAt: new Date(),
       },
       include: {
         categories: true,

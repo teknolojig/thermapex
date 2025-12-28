@@ -31,12 +31,14 @@ export async function POST(request: NextRequest) {
 
     const category = await prisma.categories.create({
       data: {
+        id: `cat-${Date.now()}`,
         name,
         slug,
         description,
         image,
         order: order || 0,
         active: active !== undefined ? active : true,
+        updatedAt: new Date(),
       },
     });
 

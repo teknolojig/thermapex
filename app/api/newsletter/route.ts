@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         // Reactivate inactive subscription
         await prisma.newsletters.update({
           where: { email: email.toLowerCase() },
-          data: { active: true },
+          data: { active: true, updatedAt: new Date() },
         });
 
         return NextResponse.json({
@@ -51,7 +51,9 @@ export async function POST(request: NextRequest) {
     // Create new subscriber
     await prisma.newsletters.create({
       data: {
+        id: `news-${Date.now()}`,
         email: email.toLowerCase(),
+        updatedAt: new Date(),
       },
     });
 
