@@ -1,0 +1,529 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Filter, X, ChevronDown, ChevronRight, Package } from 'lucide-react';
+import { getSeoContent } from './SeoContent';
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  _count: {
+    products: number;
+  };
+}
+
+// Kategori açıklamaları - her kategori için özel metin
+const CATEGORY_INFO: { [key: string]: { name: string; description: string; subtitle: string } } = {
+  'bakir-urunler/lwc-bakir-borular': {
+    name: 'LWC Bakır Boru',
+    description: 'LWC bakır borular, soğutma ve iklimlendirme sistemlerinde kullanılan yüksek kaliteli bakır boru çeşitleridir.',
+    subtitle: ''
+  },
+  'bakir-urunler/boy-bakir-borular': {
+    name: 'Boy Bakır Boru',
+    description: 'Boy bakır borular, farklı uzunluklarda üretilen kaliteli bakır boru çeşitleridir.',
+    subtitle: ''
+  },
+  'bakir-urunler/izolasyonlu-bakir-boru': {
+    name: 'İzolasyonlu Bakır Boru',
+    description: 'İzolasyonlu bakır borular, özel kaplama ile üretilen enerji tasarruflu bakır boru çeşitleridir.',
+    subtitle: ''
+  },
+  'bakir-urunler/yivli-bakir-boru': {
+    name: 'Yivli Bakır Boru',
+    description: 'Yivli bakır borular, özel tasarımlı yüzeye sahip bakır boru çeşitleridir.',
+    subtitle: ''
+  },
+  'kangal-bakir-boru': {
+    name: 'Kangal Bakır Boru',
+    description: 'Kangal bakır borular, rulo halinde sunulan esnek bakır boru çeşitleridir.',
+    subtitle: ''
+  },
+  'bakir-pul': {
+    name: 'Bakır Pul',
+    description: 'Bakır pul ürünleri, farklı sektörlerde kullanılan kaliteli bakır levha ve rulo çeşitleridir.',
+    subtitle: ''
+  }
+};
+
+interface Product {
+  id: string;
+  name: string;
+  code: string;
+  slug: string;
+  mainImage?: string;
+  specifications: any;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+}
+
+export default function ProductsContent() {
+  const pathname = usePathname();
+
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [specFilters, setSpecFilters] = useState<{ [key: string]: Set<string> }>({});
+  const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string }>({});
+
+  // Get page title immediately from pathname (for instant display)
+  const getPageTitle = () => {
+    if (pathname.startsWith('/urun-kategori/')) {
+      const categorySlug = pathname.replace('/urun-kategori/', '');
+      if (CATEGORY_INFO[categorySlug]) {
+        return CATEGORY_INFO[categorySlug].name;
+      }
+    }
+    return currentCategory ? currentCategory.name : 'Ürünlerimiz';
+  };
+
+  // Kategoriyi al - pathname'den
+  useEffect(() => {
+    let categorySlug = '';
+
+    // Eğer pathname /urun-kategori ile başlıyorsa
+    if (pathname.startsWith('/urun-kategori/')) {
+      // Full path'i al (örn: /urun-kategori/bakir-urunler/lwc-bakir-borular -> bakir-urunler/lwc-bakir-borular)
+      categorySlug = pathname.replace('/urun-kategori/', '');
+      console.log('📍 Category from pathname (FULL PATH):', categorySlug);
+    }
+
+    if (categorySlug) {
+      setSelectedCategory(categorySlug);
+      fetchProductsForCategory(categorySlug);
+    } else {
+      setSelectedCategory('');
+      setCurrentCategory(null);
+      fetchProductsForCategory('');
+    }
+
+    fetchCategories();
+  }, [pathname]);
+
+  // Kategoriler yüklendiğinde current category'yi set et
+  useEffect(() => {
+    if (selectedCategory && categories.length > 0) {
+      const found = categories.find(cat => cat.slug === selectedCategory);
+      setCurrentCategory(found || null);
+    } else if (!selectedCategory) {
+      setCurrentCategory(null);
+    }
+  }, [selectedCategory, categories]);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/categories');
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const fetchProductsForCategory = async (categorySlug: string) => {
+    try {
+      setLoading(true);
+      const url = categorySlug
+        ? `/api/products?category=${categorySlug}`
+        : '/api/products';
+      console.log('📦 Fetching products from:', url);
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      console.log(`✅ Fetched ${data.length} products for category:`, categorySlug || 'all');
+      setProducts(data);
+      setFilteredProducts(data);
+      extractSpecificationFilters(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setProducts([]);
+      setFilteredProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const extractSpecificationFilters = (products: Product[]) => {
+    const filters: { [key: string]: Set<string> } = {};
+
+    products.forEach((product) => {
+      if (product.specifications) {
+        Object.entries(product.specifications).forEach(([key, value]) => {
+          if (value && key !== 'urunAdi' && key !== 'boruTipi') {
+            if (!filters[key]) {
+              filters[key] = new Set();
+            }
+            filters[key].add(String(value));
+          }
+        });
+      }
+    });
+
+    setSpecFilters(filters);
+  };
+
+  const applyFilters = () => {
+    let filtered = [...products];
+
+    // Arama filtresi
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query) ||
+          p.code.toLowerCase().includes(query)
+      );
+    }
+
+    // Teknik özellik filtreleri
+    Object.entries(selectedFilters).forEach(([key, value]) => {
+      if (value) {
+        filtered = filtered.filter((p) => {
+          const specValue = p.specifications?.[key];
+          return specValue && String(specValue) === value;
+        });
+      }
+    });
+
+    setFilteredProducts(filtered);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [searchQuery, selectedFilters, products]);
+
+  const toggleSpecFilter = (key: string, value: string) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [key]: prev[key] === value ? '' : value,
+    }));
+  };
+
+  const clearFilters = () => {
+    setSearchQuery('');
+    setSelectedFilters({});
+  };
+
+  const getFilterLabel = (key: string): string => {
+    const labels: { [key: string]: string } = {
+      cap: 'Çap',
+      etKalinlik: 'Et Kalınlığı',
+      ambalajTuru: 'Ambalaj Türü',
+      uretimYeri: 'Üretim Yeri',
+      yivYuksekligi: 'Yiv Yüksekliği',
+      yivAcisi: 'Yiv Açısı',
+      sarmaDerecesi: 'Sarma Derecesi',
+      disSayisi: 'Diş Sayısı',
+      kgPerM: 'KG/M',
+    };
+    return labels[key] || key;
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white pt-24 md:pt-32 pb-20 overflow-hidden">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#a2602e_0%,_transparent_70%)] opacity-10" />
+        </div>
+
+        {/* Moving Gradient Orbs */}
+        <div className="absolute inset-0 opacity-30">
+          <motion.div
+            className="absolute w-96 h-96 bg-primary rounded-full blur-3xl"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, -100, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ top: '10%', right: '10%' }}
+          />
+          <motion.div
+            className="absolute w-96 h-96 bg-primary/50 rounded-full blur-3xl"
+            animate={{
+              x: [0, -100, 0],
+              y: [0, 100, 0],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ bottom: '10%', left: '10%' }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-6"
+            >
+              <Package className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {filteredProducts.length} {currentCategory ? 'Ürün' : 'Farklı Ürün'}
+              </span>
+            </motion.div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-tight">
+              {getPageTitle()}
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+              {selectedCategory && CATEGORY_INFO[selectedCategory]
+                ? CATEGORY_INFO[selectedCategory].description
+                : 'Geniş ürün yelpazemizden ihtiyacınıza uygun bakır boruyu bulun'}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Search Bar */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Ürün adı veya kodu ile ara..."
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <button
+              onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+              className="lg:hidden flex items-center gap-2 px-4 py-3 bg-primary text-white rounded-lg"
+            >
+              <Filter className="w-5 h-5" />
+              Filtrele
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex gap-8">
+          {/* Sidebar - Desktop */}
+          <aside className="hidden lg:block w-80 flex-shrink-0">
+            <div className="sticky top-32">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                {/* Kategori seçilmediğinde kategori listesi göster */}
+                {!selectedCategory && (
+                  <>
+                    <h3 className="text-lg font-bold font-heading mb-4">Kategoriler</h3>
+                    <div className="space-y-2">
+                      {categories.map((category) => (
+                        <Link key={category.id} href={`/urun-kategori/${category.slug}`}>
+                          <button className="w-full text-left px-4 py-3 rounded-lg transition-colors hover:bg-gray-50">
+                            <div className="flex items-center justify-between">
+                              <span>{category.name}</span>
+                              <span className="text-sm opacity-75">
+                                {category._count.products}
+                              </span>
+                            </div>
+                          </button>
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* Kategori seçildiğinde sadece filtreler göster */}
+                {selectedCategory && (
+                  <>
+                    <div className="mb-4">
+                      <Link href="/urunler">
+                        <button className="text-sm text-primary hover:underline flex items-center gap-1">
+                          <ChevronDown className="w-4 h-4 rotate-90" />
+                          Tüm Kategoriler
+                        </button>
+                      </Link>
+                    </div>
+
+                    {Object.keys(specFilters).length > 0 && (
+                      <>
+                        <h3 className="text-lg font-bold font-heading mb-4">Filtrele</h3>
+                        {Object.entries(specFilters).map(([key, values]) => (
+                          <div key={key} className="mb-4">
+                            <h4 className="font-medium text-sm text-gray-700 mb-2">
+                              {getFilterLabel(key)}
+                            </h4>
+                            <div className="space-y-1 max-h-48 overflow-y-auto">
+                              {Array.from(values).sort().map((value) => (
+                                <label
+                                  key={value}
+                                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedFilters[key] === value}
+                                    onChange={() => toggleSpecFilter(key, value)}
+                                    className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary checked:bg-primary checked:border-primary"
+                                  />
+                                  <span className="text-sm text-gray-700">{value}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </aside>
+
+          {/* Products Grid */}
+          <div className="flex-1">
+            <div className="mb-6 flex items-center justify-between">
+              <p className="text-gray-600">
+                <span className="font-medium text-gray-900">{filteredProducts.length}</span> ürün bulundu
+              </p>
+            </div>
+
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-2xl shadow-sm animate-pulse">
+                    <div className="aspect-square bg-gray-200" />
+                    <div className="p-4 space-y-3">
+                      <div className="h-4 bg-gray-200 rounded w-3/4" />
+                      <div className="h-4 bg-gray-200 rounded w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600">Ürün bulunamadı</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link href={`/urun/${product.slug}`}>
+                      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
+                        {/* Image */}
+                        <div className="relative aspect-square bg-gray-100 overflow-hidden">
+                          {product.mainImage ? (
+                            <Image
+                              src={product.mainImage}
+                              alt={product.name}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-400">
+                              <Package className="w-16 h-16" />
+                            </div>
+                          )}
+                          {/* Category Badge */}
+                          <div className="absolute top-3 left-3">
+                            <span className="px-3 py-1 text-xs font-medium bg-primary/90 text-white rounded-full backdrop-blur-sm">
+                              {product.category.name}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-4">
+                          <h3 className="font-bold font-heading text-gray-900 mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-gray-500 mb-3">{product.code}</p>
+
+                          {/* Specifications Preview */}
+                          {product.specifications && Object.keys(product.specifications).length > 0 && (
+                            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                              <div className="text-xs text-gray-600 space-y-1">
+                                {Object.entries(product.specifications)
+                                  .filter(([key]) => key !== 'urunAdi' && key !== 'boruTipi')
+                                  .slice(0, 3)
+                                  .map(([key, value]) => (
+                                    <div key={key} className="flex justify-between">
+                                      <span className="font-medium">{getFilterLabel(key)}:</span>
+                                      <span className="text-gray-500">{String(value)}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* View Details */}
+                          <div className="mt-4 flex items-center justify-between text-sm">
+                            <span className="text-primary font-medium group-hover:underline">
+                              Detayları Gör
+                            </span>
+                            <ChevronRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* SEO Content Section */}
+        {selectedCategory && currentCategory && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-20 bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 md:p-12 border border-gray-100"
+          >
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold font-heading text-gray-900 mb-8 text-center">
+                {currentCategory.name} Hakkında Detaylı Bilgi
+              </h2>
+
+              <div className="prose prose-lg max-w-none text-gray-700">
+                {getSeoContent(selectedCategory)}
+              </div>
+            </div>
+          </motion.section>
+        )}
+      </div>
+    </div>
+  );
+}

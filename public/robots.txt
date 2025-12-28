@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://baykasoglu.com/sitemap.xml
+
+# Disallow admin or private pages (if any)
+Disallow: /api/
+Disallow: /_next/
