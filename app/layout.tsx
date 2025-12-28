@@ -16,7 +16,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Baykasoğlu - Türkiye'nin Lider Bakır Boru Tedarikçisi",
+  title: "Thermapex - Türkiye'nin Lider Bakır Boru Tedarikçisi",
   description: "Bakır boru, LWC bakır boru, kangal bakır boru, boy bakır boru ve izolasyonlu bakır boru tedarikçisi. Yüksek kalite, rekabetçi fiyat, %100 müşteri memnuniyeti.",
   keywords: ["bakır boru", "LWC bakır boru", "kangal bakır boru", "boy bakır boru", "izolasyonlu bakır boru", "bakır pul"],
   icons: {

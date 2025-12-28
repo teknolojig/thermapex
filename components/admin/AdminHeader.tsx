@@ -16,7 +16,7 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
       <div className="h-full px-8 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Yönetim Paneli</h1>
-          <p className="text-sm text-gray-500">Baykasoğlu Admin</p>
+          <p className="text-sm text-gray-500">Thermapex Admin</p>
         </div>
 
         <div className="flex items-center gap-4">

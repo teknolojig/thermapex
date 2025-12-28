@@ -10,13 +10,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { slug },
       select: {
         name: true,
         code: true,
         specifications: true,
-        category: {
+        categories: {
           select: {
             name: true,
           },
@@ -26,16 +26,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!product) {
       return {
-        title: 'Ürün Bulunamadı | Baykasoğlu',
+        title: 'Ürün Bulunamadı | Thermapex',
         description: 'Aradığınız ürün bulunamadı.',
       };
     }
 
-    const title = `${product.name} - Baykasoğlu`;
+    const title = `${product.name} - Thermapex`;
 
     // Otomatik anlamlı description oluştur
     const specs = product.specifications as any;
-    let description = `${product.name} - ${product.category.name}. `;
+    let description = `${product.name} - ${product.categories.name}. `;
 
     // Spesifikasyonlardan önemli bilgileri ekle
     if (specs) {
@@ -52,15 +52,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       }
     }
 
-    description += 'Stoktan hemen teslim, uygun fiyatlarla Baykasoğlu güvencesiyle.';
+    description += 'Stoktan hemen teslim, uygun fiyatlarla Thermapex güvencesiyle.';
 
     // Keywords oluştur
     const keywords = [
       product.name.toLowerCase(),
-      product.category.name.toLowerCase(),
+      product.categories.name.toLowerCase(),
       'bakır boru',
       product.code.toLowerCase(),
-      'baykasoğlu',
+      'thermapex',
       'bakır boru fiyatları',
     ];
 
@@ -74,21 +74,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       keywords: keywords.join(', '),
       alternates: {
-        canonical: `https://baykasoglu.com/urun/${slug}`,
+        canonical: `https://thermapex.com/urun/${slug}`,
       },
       openGraph: {
         title,
         description,
         type: 'website',
         locale: 'tr_TR',
-        url: `https://baykasoglu.com/urun/${slug}`,
+        url: `https://thermapex.com/urun/${slug}`,
       },
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: 'Bakır Boru Ürünleri | Baykasoğlu',
-      description: 'Baykasoğlu Bakır ürünlerini keşfedin.',
+      title: 'Bakır Boru Ürünleri | Thermapex',
+      description: 'Thermapex Bakır ürünlerini keşfedin.',
     };
   }
 }

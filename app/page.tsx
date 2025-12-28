@@ -8,18 +8,18 @@ import ProductsSection from '@/components/sections/ProductsSection';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 
 export const metadata = {
-  title: 'Baykasoğlu - Türkiye\'nin Lider Bakır Boru Tedarikçisi',
-  description: 'Türkiye\'nin güvenilir bakır boru tedarikçisi Baykasoğlu. LWC, kangal, boy, izolasyonlu ve yivli bakır boru çeşitleri ile bakır pul ürünlerinde 25 yılı aşkın tecrübe. Kaliteli ürünler, uygun fiyatlar, hızlı teslimat.',
-  keywords: 'bakır boru, LWC bakır boru, kangal bakır boru, boy bakır boru, izolasyonlu bakır boru, yivli bakır boru, bakır pul, bakır boru fiyatları, bakır boru istanbul, baykasoğlu, bakır boru tedarikçisi',
+  title: 'Thermapex - Türkiye\'nin Lider Bakır Boru Tedarikçisi',
+  description: 'Türkiye\'nin güvenilir bakır boru tedarikçisi Thermapex. LWC, kangal, boy, izolasyonlu ve yivli bakır boru çeşitleri ile bakır pul ürünlerinde 25 yılı aşkın tecrübe. Kaliteli ürünler, uygun fiyatlar, hızlı teslimat.',
+  keywords: 'bakır boru, LWC bakır boru, kangal bakır boru, boy bakır boru, izolasyonlu bakır boru, yivli bakır boru, bakır pul, bakır boru fiyatları, bakır boru istanbul, thermapex, bakır boru tedarikçisi',
   alternates: {
-    canonical: 'https://baykasoglu.com',
+    canonical: 'https://thermapex.com',
   },
   openGraph: {
-    title: 'Baykasoğlu - Türkiye\'nin Lider Bakır Boru Tedarikçisi',
-    description: 'Türkiye\'nin güvenilir bakır boru tedarikçisi Baykasoğlu. 25 yılı aşkın tecrübe ile LWC, kangal, boy, izolasyonlu bakır boru ve bakır pul ürünlerinde kaliteli hizmet.',
+    title: 'Thermapex - Türkiye\'nin Lider Bakır Boru Tedarikçisi',
+    description: 'Türkiye\'nin güvenilir bakır boru tedarikçisi Thermapex. 25 yılı aşkın tecrübe ile LWC, kangal, boy, izolasyonlu bakır boru ve bakır pul ürünlerinde kaliteli hizmet.',
     type: 'website',
     locale: 'tr_TR',
-    url: 'https://baykasoglu.com',
+    url: 'https://thermapex.com',
   },
 };
 

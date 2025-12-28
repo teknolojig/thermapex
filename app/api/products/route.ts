@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const where: any = { active: true };
 
     if (categorySlug) {
-      const category = await prisma.category.findUnique({
+      const category = await prisma.categories.findUnique({
         where: { slug: categorySlug }
       });
       if (category) {
@@ -26,15 +26,15 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
       where: {
         ...where,
-        category: {
+        categories: {
           active: true, // Sadece aktif kategorilerdeki ürünleri göster
         }
       },
       include: {
-        category: {
+        categories: {
           select: {
             id: true,
             name: true,

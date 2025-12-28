@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     // Send email notification (example with nodemailer or resend)
     /*
     await sendEmail({
-      to: 'info@baykasoglu.com',
+      to: 'info@thermapex.com',
       subject: `Yeni Teklif Talebi - ${name}`,
       html: `
         <h2>Yeni Teklif Talebi</h2>

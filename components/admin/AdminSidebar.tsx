@@ -37,7 +37,7 @@ export default function AdminSidebar() {
         <div className="relative w-40 h-10 mb-8">
           <Image
             src="/logo.svg"
-            alt="Baykasoğlu"
+            alt="Thermapex"
             fill
             className="object-contain"
             priority

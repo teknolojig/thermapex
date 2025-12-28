@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
             <div className="relative w-48 h-12">
               <Image
                 src="/beyaz.svg"
-                alt="Baykasoğlu"
+                alt="Thermapex"
                 fill
                 className="object-contain"
                 priority
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-                  placeholder="admin@baykasoglu.com"
+                  placeholder="admin@thermapex.com"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center text-white/60 text-sm">
-            <p>© 2025 Baykasoğlu. Tüm hakları saklıdır.</p>
+            <p>© 2025 Thermapex. Tüm hakları saklıdır.</p>
           </div>
         </div>
       </motion.div>

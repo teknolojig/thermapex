@@ -9,10 +9,10 @@ export async function GET(request: NextRequest) {
 
     const where = categoryId ? { categoryId } : {};
 
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
       where,
       include: {
-        category: true,
+        categories: true,
       },
       orderBy: [
         { order: 'asc' },
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       ? JSON.parse(specifications)
       : specifications;
 
-    const product = await prisma.product.create({
+    const product = await prisma.products.create({
       data: {
         categoryId,
         name,
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
         order: order || 0,
       },
       include: {
-        category: true,
+        categories: true,
       },
     });
 

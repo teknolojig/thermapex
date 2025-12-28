@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const whatsappNumber = '905454215761';
-  const whatsappMessage = 'Merhaba, Baykasoğlu hakkında bilgi almak istiyorum.';
+  const whatsappMessage = 'Merhaba, Thermapex hakkında bilgi almak istiyorum.';
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (

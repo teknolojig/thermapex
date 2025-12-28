@@ -3,7 +3,7 @@ import { Folder, Package, Edit } from 'lucide-react';
 import Link from 'next/link';
 
 async function getCategories() {
-  const categories = await prisma.category.findMany({
+  const categories = await prisma.categories.findMany({
     include: {
       _count: {
         select: { products: true },

@@ -36,7 +36,7 @@ interface Product {
   description?: string;
   mainImage?: string;
   specifications: any;
-  category: {
+  categories: {
     id: string;
     name: string;
     slug: string;
@@ -65,7 +65,7 @@ export default function ProductDetailPage() {
 
       // Fetch similar products from same category
       if (data && data.category) {
-        const similarResponse = await fetch(`/api/products?category=${data.category.slug}&limit=4`);
+        const similarResponse = await fetch(`/api/products?category=${data.categories.slug}&limit=4`);
         const similarData = await similarResponse.json();
         // Filter out current product
         setSimilarProducts(similarData.filter((p: Product) => p.id !== data.id).slice(0, 3));
@@ -142,66 +142,44 @@ export default function ProductDetailPage() {
     <>
       <Header />
       <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white pt-24 md:pt-32 pb-16 overflow-hidden">
-          {/* Animated Background Pattern */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" style={{ animationDelay: '2s' }} />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#a2602e_0%,_transparent_70%)] opacity-10" />
+        {/* Hero Section - Minimal Amber Design */}
+        <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white pt-28 md:pt-36 pb-16 md:pb-20 overflow-hidden">
+          {/* Subtle Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(to right, #d97706 1px, transparent 1px), linear-gradient(to bottom, #d97706 1px, transparent 1px)`,
+              backgroundSize: '60px 60px'
+            }} />
           </div>
 
-          {/* Moving Gradient Orbs */}
-          <div className="absolute inset-0 opacity-30">
-            <motion.div
-              className="absolute w-96 h-96 bg-primary rounded-full blur-3xl"
-              animate={{
-                x: [0, 100, 0],
-                y: [0, -100, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{ top: '10%', right: '10%' }}
-            />
-            <motion.div
-              className="absolute w-96 h-96 bg-primary/50 rounded-full blur-3xl"
-              animate={{
-                x: [0, -100, 0],
-                y: [0, 100, 0],
-              }}
-              transition={{
-                duration: 15,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{ bottom: '10%', left: '10%' }}
-            />
-          </div>
+          {/* Corner Accents */}
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-3xl" />
+
+          {/* Decorative Line */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-amber-500 to-transparent" />
 
           <div className="container mx-auto px-4 relative z-10">
-            {/* Breadcrumb - Horizontal Scrollable */}
+            {/* Breadcrumb */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               className="mb-6 overflow-x-auto scrollbar-hide"
             >
-              <div className="flex items-center gap-2 text-sm text-white/70 whitespace-nowrap min-w-max">
-                <Link href="/" className="hover:text-white transition-colors flex items-center gap-1.5 flex-shrink-0">
+              <div className="flex items-center gap-2 text-sm text-stone-500 whitespace-nowrap min-w-max">
+                <Link href="/" className="hover:text-amber-500 transition-colors flex items-center gap-1.5 flex-shrink-0">
                   <Home className="w-4 h-4" />
                   <span className="hidden sm:inline">Ana Sayfa</span>
                 </Link>
-                <span className="flex-shrink-0">/</span>
-                <Link href="/urunler" className="hover:text-white transition-colors flex-shrink-0">Ürünler</Link>
-                <span className="flex-shrink-0">/</span>
-                <Link href={`/urun-kategori/${product.category.slug}`} className="hover:text-white transition-colors flex-shrink-0">
-                  {product.category.name}
+                <span className="flex-shrink-0 text-stone-600">/</span>
+                <Link href="/urunler" className="hover:text-amber-500 transition-colors flex-shrink-0">Ürünler</Link>
+                <span className="flex-shrink-0 text-stone-600">/</span>
+                <Link href={`/urunler?category=${product.categories.slug}`} className="hover:text-amber-500 transition-colors flex-shrink-0">
+                  {product.categories.name}
                 </Link>
-                <span className="flex-shrink-0">/</span>
-                <span className="text-white flex-shrink-0">{product.name}</span>
+                <span className="flex-shrink-0 text-stone-600">/</span>
+                <span className="text-amber-500 flex-shrink-0">{product.code}</span>
               </div>
             </motion.div>
 
@@ -212,20 +190,26 @@ export default function ProductDetailPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="max-w-4xl"
             >
-              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-4">
-                <Package className="w-4 h-4" />
-                <span className="text-sm font-medium">{product.category.name}</span>
+              {/* Category Badge */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-px w-12 bg-amber-500" />
+                <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full">
+                  <Package className="w-4 h-4 text-amber-500" />
+                  <span className="text-sm text-amber-400 font-medium">{product.categories.name}</span>
+                </div>
               </div>
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 leading-tight text-white">
                 {product.name}
               </h1>
 
-              <p className="text-lg md:text-xl text-white/90">
-                Ürün Kodu: <span className="font-semibold text-white">{product.code}</span>
-              </p>
+              <div className="flex items-center gap-4">
+                <span className="text-stone-400">Ürün Kodu:</span>
+                <span className="font-mono text-amber-500 font-semibold bg-amber-500/10 px-3 py-1 rounded">{product.code}</span>
+              </div>
             </motion.div>
           </div>
+
         </section>
 
         <div className="container mx-auto px-4 py-12">
@@ -314,9 +298,9 @@ export default function ProductDetailPage() {
                   <Package className="w-6 h-6 text-primary" />
                   <h3 className="text-lg font-bold font-heading text-secondary">Kategori</h3>
                 </div>
-                <Link href={`/urun-kategori/${product.category.slug}`}>
+                <Link href={`/urun-kategori/${product.categories.slug}`}>
                   <div className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors">
-                    <span className="font-medium">{product.category.name}</span>
+                    <span className="font-medium">{product.categories.name}</span>
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </Link>
@@ -376,7 +360,7 @@ export default function ProductDetailPage() {
                     <p className="text-gray-600 mt-2">Aynı kategoriden diğer ürünlerimiz</p>
                   </div>
                   <Link
-                    href={`/urun-kategori/${product.category.slug}`}
+                    href={`/urun-kategori/${product.categories.slug}`}
                     className="hidden md:inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
                   >
                     Tümünü Gör
@@ -410,7 +394,7 @@ export default function ProductDetailPage() {
                             )}
                             <div className="absolute top-3 right-3">
                               <span className="px-3 py-1 text-xs font-medium bg-primary/90 text-white rounded-full backdrop-blur-sm">
-                                {similarProduct.category.name}
+                                {similarProduct.categories.name}
                               </span>
                             </div>
                           </div>
@@ -451,7 +435,7 @@ export default function ProductDetailPage() {
 
                 <div className="mt-6 text-center md:hidden">
                   <Link
-                    href={`/urun-kategori/${product.category.slug}`}
+                    href={`/urun-kategori/${product.categories.slug}`}
                     className="inline-flex items-center gap-2 text-primary font-medium"
                   >
                     Tümünü Gör

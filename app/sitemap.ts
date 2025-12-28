@@ -2,10 +2,10 @@ import { MetadataRoute } from 'next';
 import { prisma } from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://baykasoglu.com';
+  const baseUrl = 'https://thermapex.com';
 
   // Tüm ürünleri çek
-  const products = await prisma.product.findMany({
+  const products = await prisma.products.findMany({
     select: {
       slug: true,
       updatedAt: true,

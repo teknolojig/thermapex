@@ -41,7 +41,7 @@ export async function PUT(
     }
 
     // Check if product exists
-    const existingProduct = await prisma.product.findUnique({
+    const existingProduct = await prisma.products.findUnique({
       where: { id },
     });
 
@@ -53,7 +53,7 @@ export async function PUT(
     }
 
     // Check if slug or code is used by another product
-    const duplicateCheck = await prisma.product.findFirst({
+    const duplicateCheck = await prisma.products.findFirst({
       where: {
         AND: [
           { id: { not: id } },
@@ -75,7 +75,7 @@ export async function PUT(
     }
 
     // Update product
-    const updatedProduct = await prisma.product.update({
+    const updatedProduct = await prisma.products.update({
       where: { id },
       data: {
         name,

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 // GET - Tüm kategorileri getir
 export async function GET() {
   try {
-    const categories = await prisma.category.findMany({
+    const categories = await prisma.categories.findMany({
       orderBy: { order: 'asc' },
       include: {
         _count: {
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, slug, description, image, order, active } = body;
 
-    const category = await prisma.category.create({
+    const category = await prisma.categories.create({
       data: {
         name,
         slug,

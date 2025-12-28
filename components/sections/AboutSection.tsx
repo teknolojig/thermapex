@@ -3,152 +3,169 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Target, Eye, Heart, Award } from 'lucide-react';
+import { Shield, Thermometer, Award, Truck, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
 
-const values = [
+const highlights = [
   {
-    icon: Target,
-    title: 'Misyonumuz',
-    description:
-      'Bakır boru sektöründe kalite standartlarını yükselterek, müşterilerimize en iyi hizmeti sunmak.',
+    icon: Shield,
+    title: 'EN 12735 Sertifikalı',
+    description: 'Uluslararası standartlara uygun üretim',
   },
   {
-    icon: Eye,
-    title: 'Vizyonumuz',
-    description:
-      'Türkiye ve bölgede bakır boru tedarikinde lider olmak, yenilikçi çözümlerle sektöre değer katmak.',
-  },
-  {
-    icon: Heart,
-    title: 'Değerlerimiz',
-    description:
-      'Kalite, güvenilirlik, müşteri memnuniyeti ve sürekli gelişim ilkelerimizdir.',
+    icon: Thermometer,
+    title: '9mm Polietilen İzolasyon',
+    description: 'Optimal ısı yalıtımı performansı',
   },
   {
     icon: Award,
-    title: 'Taahhüdümüz',
-    description:
-      'Her projede %100 müşteri memnuniyeti sağlamak ve zamanında teslimat yapmak.',
+    title: 'Premium Kalite Bakır',
+    description: 'Cu-DHP %99.9 saflıkta bakır',
   },
+  {
+    icon: Truck,
+    title: 'Hızlı Teslimat',
+    description: 'Türkiye geneli güvenli sevkiyat',
+  },
+];
+
+const features = [
+  'Split klima sistemleri için ideal',
+  'VRV/VRF sistemlerde kullanıma uygun',
+  'Yüksek basınç dayanımı',
+  'Kolay montaj imkanı',
+  'Uzun ömürlü performans',
+  'Enerji tasarrufu sağlar',
 ];
 
 export default function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <section id="hakkimizda" className="py-20 md:py-16 bg-white relative overflow-hidden">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+    <section id="hakkimizda" className="py-24 bg-gradient-to-b from-white to-stone-50 relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-3xl" />
+
+      {/* Pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d97706' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Column - Text Content */}
+        <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left Column - Image & Stats */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
+            className="relative"
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2 block">
-              Kurumsal
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-secondary mb-6">
-              <span className="text-primary">Baykasoğlu</span> Hakkında
-            </h2>
-            <div className="space-y-4 text-text-muted leading-relaxed">
-              <p>
-                Baykasoğlu olarak, 25 yılı aşkın süredir bakır boru sektöründe
-                faaliyet göstermekteyiz. Sektördeki deneyimimiz ve müşteri odaklı
-                yaklaşımımızla, Türkiye'nin önde gelen bakır boru tedarikçilerinden
-                biri haline geldik.
-              </p>
-              <p>
-                LWC bakır borular, kangal bakır borular, boy bakır borular ve
-                izolasyonlu bakır borular olmak üzere geniş ürün yelpazemizle her
-                türlü projeye çözüm sunuyoruz. Yüksek kalite standartlarımız,
-                rekabetçi fiyatlarımız ve müşteri memnuniyetine verdiğimiz önemle
-                sektörde fark yaratıyoruz.
-              </p>
-              <p>
-                500'den fazla kurumsal firma ile çalıştığımız için, en zorlu
-                projelerde bile güvenilir bir iş ortağıyız. Uzman kadromuz ve
-                modern tesislerimizle, müşterilerimizin tüm ihtiyaçlarına hızlı
-                ve profesyonel çözümler sunuyoruz.
-              </p>
+            {/* Main Image */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <div className="aspect-[4/3] bg-gradient-to-br from-stone-100 to-stone-200 relative">
+                <Image
+                  src="/tekli.png"
+                  alt="İzolasyonlu Bakır Boru"
+                  fill
+                  className="object-contain p-8"
+                />
+              </div>
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/20 to-transparent" />
             </div>
+
+            {/* Floating Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-6 border border-amber-100"
+            >
+              <div className="text-center">
+                <div className="text-4xl font-bold text-amber-600 mb-1">25+</div>
+                <div className="text-stone-600 text-sm font-medium">Yıllık Tecrübe</div>
+              </div>
+            </motion.div>
+
+            {/* Decorative Element */}
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-amber-500/10 rounded-2xl -z-10" />
           </motion.div>
 
-          {/* Right Column - Values Grid */}
+          {/* Right Column - Content */}
           <motion.div
-            ref={ref}
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            initial={{ opacity: 0, x: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
+            <span className="inline-block text-amber-600 font-semibold text-sm uppercase tracking-wider mb-3 bg-amber-50 px-4 py-1.5 rounded-full">
+              Hakkımızda
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold font-heading text-stone-900 mb-6">
+              İzolasyonlu Bakır Boru
+              <span className="block text-amber-600 mt-2">Uzmanı</span>
+            </h2>
+
+            <div className="space-y-4 text-stone-600 leading-relaxed mb-8">
+              <p>
+                <strong className="text-stone-800">Thermapex</strong> olarak, 25 yılı aşkın tecrübemizle
+                klima ve soğutma sistemleri için <strong className="text-amber-700">polietilen izolasyonlu bakır borular</strong> sunuyoruz.
+              </p>
+              <p>
+                Tekli ve çiftli izolasyonlu bakır borularımız, EN 12735 standardına uygun olarak üretilmekte
+                ve 9mm kalınlığında beyaz polietilen izolasyon ile kaplanmaktadır. Split, multi-split ve
+                VRV/VRF sistemleri için ideal çözümler sunuyoruz.
+              </p>
+            </div>
+
+            {/* Feature List */}
+            <div className="grid grid-cols-2 gap-3 mb-8">
+              {features.map((feature, index) => (
                 <motion.div
                   key={index}
-                  variants={itemVariants}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="group relative bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                  className="flex items-center gap-2"
                 >
-                  {/* Gradient Background on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300" />
-
-                  {/* Icon */}
-                  <div className="relative">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
-                    >
-                      <Icon className="w-6 h-6 text-primary" />
-                    </motion.div>
-
-                    <h3 className="text-lg font-semibold font-heading text-secondary mb-2 group-hover:text-primary transition-colors">
-                      {value.title}
-                    </h3>
-
-                    <p className="text-text-muted text-sm leading-relaxed">
-                      {value.description}
-                    </p>
-                  </div>
-
-                  {/* Bottom Accent Line */}
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary-dark rounded-b-2xl"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  <CheckCircle2 className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                  <span className="text-stone-700 text-sm">{feature}</span>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Highlights Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {highlights.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                    className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 border border-stone-100 hover:border-amber-200"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:from-amber-200 group-hover:to-orange-200 transition-colors">
+                        <Icon className="w-5 h-5 text-amber-600" />
+                      </div>
+                      <div>
+                        <h4 className="text-stone-900 font-semibold text-sm mb-0.5 group-hover:text-amber-700 transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-stone-500 text-xs leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </motion.div>
         </div>
       </div>

@@ -10,7 +10,7 @@ export async function GET(
     // Slug array'ini join et: ["bakir-urunler", "lwc-bakir-borular"] -> "bakir-urunler/lwc-bakir-borular"
     const categorySlug = Array.isArray(slug) ? slug.join('/') : slug;
 
-    const category = await prisma.category.findUnique({
+    const category = await prisma.categories.findUnique({
       where: {
         slug: categorySlug,
       },

@@ -3,10 +3,10 @@ import { Mail, Package, Users, TrendingUp } from 'lucide-react';
 
 async function getDashboardStats() {
   const [newsletterCount, productsCount, usersCount, activeNewsletterCount] = await Promise.all([
-    prisma.newsletter.count(),
-    prisma.product.count(),
-    prisma.user.count(),
-    prisma.newsletter.count({ where: { active: true } }),
+    prisma.newsletters.count(),
+    prisma.products.count(),
+    prisma.users.count(),
+    prisma.newsletters.count({ where: { active: true } }),
   ]);
 
   return {

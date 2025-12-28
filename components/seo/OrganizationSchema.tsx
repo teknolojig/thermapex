@@ -2,9 +2,9 @@ export default function OrganizationSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Baykasoğlu Bakır",
-    "url": "https://baykasoglu.com",
-    "logo": "https://baykasoglu.com/logo.svg",
+    "name": "Thermapex Bakır",
+    "url": "https://thermapex.com",
+    "logo": "https://thermapex.com/logo.svg",
     "description": "Türkiye'nin lider bakır boru tedarikçisi. LWC, kangal, boy, izolasyonlu bakır boru ve bakır pul çeşitleri.",
     "address": {
       "@type": "PostalAddress",
@@ -22,7 +22,7 @@ export default function OrganizationSchema() {
       "availableLanguage": ["Turkish"]
     },
     "sameAs": [
-      "https://baykasoglu.com"
+      "https://thermapex.com"
     ]
   };
 

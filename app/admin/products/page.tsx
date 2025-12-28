@@ -4,9 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 async function getProducts() {
-  const products = await prisma.product.findMany({
+  const products = await prisma.products.findMany({
     include: {
-      category: true,
+      categories: true,
     },
     orderBy: {
       createdAt: 'desc',
@@ -85,7 +85,7 @@ export default async function ProductsPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center text-sm text-gray-500">
                       <Folder className="w-4 h-4 mr-1 text-primary" />
-                      {product.category.name}
+                      {product.categories.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">

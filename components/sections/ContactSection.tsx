@@ -112,7 +112,7 @@ export default function ContactSection() {
               </a>
 
               <a
-                href="mailto:info@baykasoglu.com"
+                href="mailto:info@thermapex.com"
                 className="flex items-start gap-4 group hover:translate-x-2 transition-transform"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
@@ -120,7 +120,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <div className="font-semibold text-secondary mb-1">E-posta</div>
-                  <div className="text-text-muted">info@baykasoglu.com</div>
+                  <div className="text-text-muted">info@thermapex.com</div>
                 </div>
               </a>
 

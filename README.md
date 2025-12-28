@@ -1,6 +1,6 @@
-# Baykasoğlu Web Sitesi
+# Thermapex Web Sitesi
 
-Baykasoğlu bakır boru tedarikçisi kurumsal web sitesi.
+Thermapex bakır boru tedarikçisi kurumsal web sitesi.
 
 ## Teknolojiler
 
@@ -39,18 +39,18 @@ npm run dev
 ### Environment Variables
 
 ```env
-DATABASE_URL="postgresql://user:pass@localhost:5432/baykasoglu?schema=public"
+DATABASE_URL="postgresql://user:pass@localhost:5432/thermapex?schema=public"
 AUTH_SECRET="your-secret-key"
 NEXTAUTH_URL="http://localhost:3000"
 
 SMTP_HOST=smtp.yandex.com.tr
 SMTP_PORT=465
 SMTP_SECURE=true
-SMTP_USER=noreply@baykasoglu.com
+SMTP_USER=noreply@thermapex.com
 SMTP_PASSWORD=your-password
-SMTP_FROM_NAME=Baykasoğlu
-SMTP_FROM_EMAIL=noreply@baykasoglu.com
-ADMIN_EMAIL=info@baykasoglu.com
+SMTP_FROM_NAME=Thermapex
+SMTP_FROM_EMAIL=noreply@thermapex.com
+ADMIN_EMAIL=info@thermapex.com
 ```
 
 ## Production Deployment
@@ -59,12 +59,12 @@ ADMIN_EMAIL=info@baykasoglu.com
 
 **Sunucu**: 91.98.75.17
 **SSH**: `ssh -p 2299 root@91.98.75.17` (şifre: Vm8KpL3xNqR7wT2sYc5HjF9)
-**Domain**: baykasoglu.com
+**Domain**: thermapex.com
 
 ### Dizin Yapısı
 
 ```
-/var/www/baykasoglu.com/
+/var/www/thermapex.com/
 ├── repo/                    # Git repository
 ├── logs/                    # PM2 ve Nginx logları
 ├── ecosystem.config.js      # PM2 konfigürasyonu
@@ -74,11 +74,11 @@ ADMIN_EMAIL=info@baykasoglu.com
 ### PM2 Konfigürasyonu
 
 ```javascript
-// /var/www/baykasoglu.com/ecosystem.config.js
+// /var/www/thermapex.com/ecosystem.config.js
 module.exports = {
   apps: [{
-    name: 'baykasoglu.com',
-    cwd: '/var/www/baykasoglu.com/repo',
+    name: 'thermapex.com',
+    cwd: '/var/www/thermapex.com/repo',
     script: 'npm',
     args: 'start',
     instances: 2,
@@ -90,8 +90,8 @@ module.exports = {
       NODE_ENV: 'production',
       PORT: 3009
     },
-    error_file: '/var/www/baykasoglu.com/logs/error.log',
-    out_file: '/var/www/baykasoglu.com/logs/out.log',
+    error_file: '/var/www/thermapex.com/logs/error.log',
+    out_file: '/var/www/thermapex.com/logs/out.log',
     time: true
   }]
 }
@@ -100,14 +100,14 @@ module.exports = {
 ### Database
 
 **PostgreSQL Bilgileri**:
-- Database: `baykasoglu`
-- User: `baykasoglu_user`
+- Database: `thermapex`
+- User: `thermapex_user`
 - Password: `BaykasPgSecure2025`
 - Host: `localhost:5432`
 
 ### Nginx Konfigürasyonu
 
-**Dosya Yolu**: `/etc/nginx/sites-available/baykasoglu.com.conf`
+**Dosya Yolu**: `/etc/nginx/sites-available/thermapex.com.conf`
 **Proxy Port**: 3009
 **SSL**: Let's Encrypt (otomatik yenileme aktif)
 
@@ -118,13 +118,13 @@ module.exports = {
 pm2 start ecosystem.config.js
 
 # Uygulamayı durdur
-pm2 stop baykasoglu.com
+pm2 stop thermapex.com
 
 # Uygulamayı yeniden başlat
-pm2 restart baykasoglu.com
+pm2 restart thermapex.com
 
 # Logları görüntüle
-pm2 logs baykasoglu.com
+pm2 logs thermapex.com
 
 # PM2 durumunu görüntüle
 pm2 list
@@ -140,7 +140,7 @@ pm2 save
 ssh -p 2299 root@91.98.75.17
 
 # 2. Proje dizinine git
-cd /var/www/baykasoglu.com/repo
+cd /var/www/thermapex.com/repo
 
 # 3. Son değişiklikleri çek
 git pull origin main
@@ -156,10 +156,10 @@ npx prisma db push
 npm run build
 
 # 7. PM2'yi yeniden başlat
-pm2 restart baykasoglu.com
+pm2 restart thermapex.com
 
 # 8. Logları kontrol et
-pm2 logs baykasoglu.com --lines 50
+pm2 logs thermapex.com --lines 50
 ```
 
 ### SSL Sertifikası Yenileme
@@ -185,8 +185,8 @@ systemctl status nginx
 
 ## Admin Panel
 
-**URL**: https://baykasoglu.com/admin
-**Email**: info@baykasoglu.com
+**URL**: https://thermapex.com/admin
+**Email**: info@thermapex.com
 **Şifre**: Baykas12345**
 
 ### Admin Özellikleri
@@ -218,11 +218,11 @@ systemctl status nginx
 
 ```bash
 # Logları kontrol et
-pm2 logs baykasoglu.com
+pm2 logs thermapex.com
 
 # Uygulamayı sil ve yeniden başlat
-pm2 delete baykasoglu.com
-pm2 start /var/www/baykasoglu.com/ecosystem.config.js
+pm2 delete thermapex.com
+pm2 start /var/www/thermapex.com/ecosystem.config.js
 pm2 save
 ```
 
@@ -233,7 +233,7 @@ pm2 save
 systemctl status postgresql
 
 # Database kullanıcısını test et
-PGPASSWORD=BaykasPgSecure2025 psql -h localhost -U baykasoglu_user -d baykasoglu -c "SELECT 1;"
+PGPASSWORD=BaykasPgSecure2025 psql -h localhost -U thermapex_user -d thermapex -c "SELECT 1;"
 ```
 
 ### Nginx 502 Bad Gateway
@@ -243,12 +243,12 @@ PGPASSWORD=BaykasPgSecure2025 psql -h localhost -U baykasoglu_user -d baykasoglu
 curl http://localhost:3009
 
 # PM2'yi kontrol et
-pm2 list | grep baykasoglu
+pm2 list | grep thermapex
 
 # Nginx loglarını kontrol et
-tail -f /var/www/baykasoglu.com/logs/nginx-error.log
+tail -f /var/www/thermapex.com/logs/nginx-error.log
 ```
 
 ## Lisans
 
-Proprietary - Baykasoğlu © 2025
+Proprietary - Thermapex © 2025

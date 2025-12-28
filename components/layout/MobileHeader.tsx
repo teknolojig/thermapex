@@ -3,13 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, FileText, Menu, X, ChevronDown, Home, Info, Mail, CircuitBoard, MessageCircle } from 'lucide-react';
+import { Phone, FileText, Menu, X, Home, Info, Mail, Circle, Layers, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from '@/components/QuoteModal';
 
 export default function MobileHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -35,14 +34,6 @@ export default function MobileHeader() {
       document.documentElement.style.overflow = '';
     };
   }, [isMobileMenuOpen]);
-
-  const categoryLinks = [
-    { name: 'LWC Bakır Borular', href: '/urun-kategori/bakir-urunler/lwc-bakir-borular' },
-    { name: 'Kangal Bakır Boru', href: '/urun-kategori/kangal-bakir-boru' },
-    { name: 'Boy Bakır Borular', href: '/urun-kategori/bakir-urunler/boy-bakir-borular' },
-    { name: 'İzolasyonlu Bakır Boru', href: '/urun-kategori/bakir-urunler/izolasyonlu-bakir-boru' },
-    { name: 'Yivli Bakır Boru', href: '/urun-kategori/bakir-urunler/yivli-bakir-boru' },
-  ];
 
   return (
     <>
@@ -78,7 +69,7 @@ export default function MobileHeader() {
                     >
                       <Image
                         src="/logo.svg"
-                        alt="Baykasoğlu"
+                        alt="Thermapex"
                         fill
                         className="object-contain"
                         priority
@@ -95,7 +86,7 @@ export default function MobileHeader() {
                     >
                       <Image
                         src="/beyaz.svg"
-                        alt="Baykasoğlu"
+                        alt="Thermapex"
                         fill
                         className="object-contain"
                         priority
@@ -174,7 +165,7 @@ export default function MobileHeader() {
             >
               <Image
                 src="/beyaz.svg"
-                alt="Baykasoğlu"
+                alt="Thermapex"
                 width={150}
                 height={40}
                 className="object-contain"
@@ -216,71 +207,35 @@ export default function MobileHeader() {
                     </Link>
                   </motion.div>
 
-                  {/* Bakır Borular Dropdown */}
+                  {/* Tekli İzolasyonlu Link */}
                   <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <button
-                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      className="w-full flex items-center justify-between px-6 py-4 text-white hover:bg-white/10 rounded-2xl transition-all group"
+                    <Link
+                      href="/urunler?category=tekli-beyaz-polietilen"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-4 px-6 py-4 text-white hover:bg-white/10 rounded-2xl transition-all group"
                     >
-                      <div className="flex items-center gap-4">
-                        <CircuitBoard className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                        <span className="text-xl font-semibold">Bakır Borular</span>
-                      </div>
-                      <ChevronDown
-                        className={`w-6 h-6 transition-transform ${
-                          isDropdownOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-
-                    <AnimatePresence>
-                      {isDropdownOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pl-14 pr-6 py-2 space-y-1">
-                            {categoryLinks.map((category, index) => (
-                              <motion.div
-                                key={category.name}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                              >
-                                <Link
-                                  href={category.href}
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                  className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"
-                                >
-                                  {category.name}
-                                </Link>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                      <Circle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                      <span className="text-xl font-semibold">Tekli İzolasyonlu</span>
+                    </Link>
                   </motion.div>
 
+                  {/* Çiftli İzolasyonlu Link */}
                   <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.45 }}
                   >
                     <Link
-                      href="/urun-kategori/bakir-pul"
+                      href="/urunler?category=ciftli-beyaz-polietilen"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex items-center gap-4 px-6 py-4 text-white hover:bg-white/10 rounded-2xl transition-all group"
                     >
-                      <CircuitBoard className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                      <span className="text-xl font-semibold">Bakır Pul</span>
+                      <Layers className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                      <span className="text-xl font-semibold">Çiftli İzolasyonlu</span>
                     </Link>
                   </motion.div>
 

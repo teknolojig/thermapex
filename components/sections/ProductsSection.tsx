@@ -2,109 +2,52 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRef } from 'react';
+import { ArrowRight, Circle, Layers } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const products = [
   {
-    id: 'lwc-borular',
-    title: 'LWC BAKIR BORULAR',
-    image: '/images/products/BKS200075.jpg',
-    link: '/urun-kategori/bakir-urunler/lwc-bakir-borular/',
+    id: 'tekli',
+    title: 'Tekli İzolasyonlu',
+    subtitle: 'Polietilen Bakır Boru',
+    description: '9mm beyaz polietilen izolasyonlu tekli bakır borular. Split ve VRV sistemler için ideal.',
+    image: '/tekli.png',
+    link: '/urunler?category=tekli-beyaz-polietilen',
+    icon: Circle,
+    gradient: 'from-amber-500/20 to-orange-600/20',
+    borderColor: 'border-amber-500/30',
   },
   {
-    id: 'kangal-borular',
-    title: 'KANGAL BAKIR BORULAR',
-    image: '/images/products/BKS200254.jpg',
-    link: '/urun-kategori/kangal-bakir-boru/',
-  },
-  {
-    id: 'boy-borular',
-    title: 'BOY BAKIR BORULAR',
-    image: '/images/products/BKS200112.jpg',
-    link: '/urun-kategori/bakir-urunler/boy-bakir-borular/',
-  },
-  {
-    id: 'izolasyonlu-borular',
-    title: 'İZOLASYONLU BAKIR BORU',
-    image: '/images/products/BKS200129.jpg',
-    link: '/urun-kategori/bakir-urunler/izolasyonlu-bakir-boru/',
-  },
-  {
-    id: 'yivli-borular',
-    title: 'YİVLİ BAKIR BORU',
-    image: '/images/products/yivli.jpg',
-    link: '/urun-kategori/bakir-urunler/yivli-bakir-boru/',
-  },
-  {
-    id: 'bakir-pul',
-    title: 'BAKIR PUL',
-    image: '/images/products/M-4.jpg',
-    link: '/urun-kategori/bakir-pul/',
+    id: 'ciftli',
+    title: 'Çiftli İzolasyonlu',
+    subtitle: 'Polietilen Bakır Boru',
+    description: '9mm beyaz polietilen izolasyonlu çiftli bakır borular. Gaz ve sıvı hatları için tek pakette.',
+    image: '/tekli.png',
+    link: '/urunler?category=ciftli-beyaz-polietilen',
+    icon: Layers,
+    gradient: 'from-orange-500/20 to-amber-600/20',
+    borderColor: 'border-orange-500/30',
   },
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
 
 export default function ProductsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  const itemsPerPage = 4;
-  const maxIndex = Math.max(0, products.length - itemsPerPage);
-
-  // Detect screen size for carousel behavior
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => {
-      const nextIndex = prev + 1;
-      return nextIndex > maxIndex ? 0 : nextIndex;
-    });
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => {
-      const prevIndex = prev - 1;
-      return prevIndex < 0 ? maxIndex : prevIndex;
-    });
-  };
 
   return (
-    <section id="urunler" className="py-20 md:py-16 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
+    <section id="urunler" className="py-24 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-3xl" />
+
+      {/* Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d97706' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -114,197 +57,119 @@ export default function ProductsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3"
-          >
+          <span className="inline-block text-amber-600 font-semibold text-sm uppercase tracking-wider mb-3 bg-amber-50 px-4 py-1.5 rounded-full">
             Ürünlerimiz
-          </motion.span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-gray-900 mb-6">
-            Ürün <span className="text-primary">Gruplarımız</span>
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading text-stone-900 mb-4">
+            Ürün <span className="text-amber-600">Gruplarımız</span>
           </h2>
-
-          {/* Separator with Icon */}
-          <div className="flex items-center justify-center gap-4">
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-16 md:w-24 h-px bg-gradient-to-r from-transparent to-primary"
-            />
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
-              <ChevronDown className="w-8 h-8 text-primary relative z-10" />
-            </motion.div>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-16 md:w-24 h-px bg-gradient-to-l from-transparent to-primary"
-            />
-          </div>
+          <p className="text-stone-600 text-lg max-w-2xl mx-auto">
+            Yüksek kaliteli polietilen izolasyonlu bakır borular ile klima ve soğutma sistemleriniz için en iyi çözümler
+          </p>
         </motion.div>
 
-        {/* Mobile Grid / Desktop Carousel Container */}
-        <div className="relative">
-          {/* Products Carousel Wrapper - Desktop Only */}
-          <div className="relative">
-            {/* Navigation Buttons - Desktop Only */}
-            <button
-              onClick={prevSlide}
-              className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 z-20 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 group"
-              aria-label="Previous products"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-primary transition-colors" />
-            </button>
-
-            <button
-              onClick={nextSlide}
-              className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 z-20 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 group"
-              aria-label="Next products"
-            >
-              <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-primary transition-colors" />
-            </button>
-
-            {/* Products - Grid on Mobile, Carousel on Desktop */}
-            <div
-              ref={ref}
-              className="overflow-hidden"
-            >
+        {/* Products Grid */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        >
+          {products.map((product, index) => {
+            const Icon = product.icon;
+            return (
               <motion.div
-                animate={{
-                  x: isDesktop ? `-${currentIndex * (100 / itemsPerPage)}%` : 0
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                }}
-                className="grid grid-cols-2 gap-4 lg:flex lg:gap-6"
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 + index * 0.15 }}
               >
-                {products.map((product, index) => (
-                  <motion.a
-                    key={product.id}
-                    href={product.link}
-                    whileHover={{ y: -12, scale: 1.02 }}
-                    className="group relative overflow-hidden rounded-3xl aspect-[4/5] shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 lg:flex-none lg:w-[calc(25%-18px)]"
+                <Link href={product.link}>
+                  <motion.div
+                    whileHover={{ y: -8 }}
+                    className={`group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border ${product.borderColor}`}
                   >
-                    {/* Background Image */}
-                    <div className="absolute inset-0">
-                      <Image
-                        src={product.image}
-                        alt={product.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
-                    </div>
-
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/95 transition-all duration-500" />
-
-                    {/* Hover Overlay with Primary Color */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/40 group-hover:via-primary/20 group-hover:to-orange-600/20 transition-all duration-500" />
-
-                    {/* Animated Glow Effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent blur-xl" />
-                    </div>
+                    {/* Gradient Background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
                     {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-between p-8">
-                      {/* Top Icon Badge */}
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileHover={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                        className="self-end"
-                      >
-                        <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
-                          <span className="text-white text-xl">→</span>
+                    <div className="relative p-8">
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-6">
+                        <div>
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-colors">
+                              <Icon className="w-6 h-6 text-amber-600" />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-bold text-stone-900 group-hover:text-amber-700 transition-colors">
+                                {product.title}
+                              </h3>
+                              <p className="text-amber-600 font-medium text-sm">
+                                {product.subtitle}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                      </motion.div>
-
-                      {/* Bottom Content */}
-                      <div className="relative">
                         <motion.div
-                          initial={{ y: 0 }}
-                          whileHover={{ y: -8 }}
-                          transition={{ duration: 0.3 }}
+                          whileHover={{ scale: 1.1, rotate: -45 }}
+                          className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center group-hover:bg-amber-500 transition-colors"
                         >
-                          <h3 className="text-white font-bold text-sm md:text-xl lg:text-2xl font-heading mb-3 drop-shadow-2xl leading-tight">
-                            {product.title}
-                          </h3>
+                          <ArrowRight className="w-5 h-5 text-amber-600 group-hover:text-white transition-colors" />
+                        </motion.div>
+                      </div>
 
-                          {/* Animated Underline */}
-                          <motion.div
-                            className="flex gap-1 mb-4"
-                            initial="rest"
-                            whileHover="hover"
-                          >
-                            {[0, 1, 2].map((i) => (
-                              <motion.div
-                                key={i}
-                                className="h-1 bg-primary rounded-full"
-                                variants={{
-                                  rest: { width: i === 0 ? '60%' : i === 1 ? '30%' : '10%' },
-                                  hover: { width: i === 0 ? '80%' : i === 1 ? '15%' : '5%' }
-                                }}
-                                transition={{ duration: 0.4, delay: i * 0.05 }}
-                              />
-                            ))}
-                          </motion.div>
+                      {/* Image */}
+                      <div className="relative h-48 mb-6 bg-gradient-to-br from-stone-100 to-stone-50 rounded-2xl overflow-hidden">
+                        <Image
+                          src={product.image}
+                          alt={product.title}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
 
-                          {/* View More Text */}
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            whileHover={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="flex items-center gap-2 text-white/80 text-sm font-medium"
-                          >
-                            <span>İncele</span>
-                            <motion.span
-                              animate={{ x: [0, 5, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                              →
-                            </motion.span>
-                          </motion.div>
+                      {/* Description */}
+                      <p className="text-stone-600 mb-6 leading-relaxed">
+                        {product.description}
+                      </p>
+
+                      {/* Bottom CTA */}
+                      <div className="mt-6 pt-6 border-t border-stone-100 flex items-center justify-between">
+                        <span className="text-stone-500 text-sm">Ürünleri İncele</span>
+                        <motion.div
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="text-amber-600 font-semibold flex items-center gap-1"
+                        >
+                          Detaylı Bilgi
+                          <ArrowRight className="w-4 h-4" />
                         </motion.div>
                       </div>
                     </div>
-
-                    {/* Corner Decorations */}
-                    <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-tl-3xl" />
-                    <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-br-3xl" />
-                  </motion.a>
-                ))}
+                  </motion.div>
+                </Link>
               </motion.div>
-            </div>
-          </div>
+            );
+          })}
+        </motion.div>
 
-          {/* Pagination Dots - Desktop Only */}
-          <div className="hidden lg:flex justify-center gap-2 mt-8">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index
-                    ? 'w-8 bg-primary'
-                    : 'w-2 bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to position ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
+        {/* All Products Link */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="text-center mt-12"
+        >
+          <Link
+            href="/urunler"
+            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-amber-500/25"
+          >
+            Tüm Ürünleri Görüntüle
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

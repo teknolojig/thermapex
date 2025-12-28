@@ -3,10 +3,10 @@ import ProductEditForm from '@/components/admin/ProductEditForm';
 import { notFound } from 'next/navigation';
 
 async function getProduct(id: string) {
-  const product = await prisma.product.findUnique({
+  const product = await prisma.products.findUnique({
     where: { id },
     include: {
-      category: true,
+      categories: true,
     },
   });
 
@@ -18,7 +18,7 @@ async function getProduct(id: string) {
 }
 
 async function getCategories() {
-  const categories = await prisma.category.findMany({
+  const categories = await prisma.categories.findMany({
     orderBy: {
       name: 'asc',
     },

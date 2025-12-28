@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://baykasoglu.com/sitemap.xml
+Sitemap: https://thermapex.com/sitemap.xml
 
 # Disallow admin or private pages (if any)
 Disallow: /api/

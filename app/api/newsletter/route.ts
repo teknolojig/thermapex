@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if email already exists
-    const existingSubscriber = await prisma.newsletter.findUnique({
+    const existingSubscriber = await prisma.newsletters.findUnique({
       where: { email: email.toLowerCase() },
     });
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         );
       } else {
         // Reactivate inactive subscription
-        await prisma.newsletter.update({
+        await prisma.newsletters.update({
           where: { email: email.toLowerCase() },
           data: { active: true },
         });
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new subscriber
-    await prisma.newsletter.create({
+    await prisma.newsletters.create({
       data: {
         email: email.toLowerCase(),
       },

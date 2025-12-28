@@ -12,12 +12,12 @@ export default function ProductSchema({ name, description, image, sku, category 
     "@type": "Product",
     "name": name,
     "description": description,
-    "image": image || "https://baykasoglu.com/logo.svg",
+    "image": image || "https://thermapex.com/logo.svg",
     "sku": sku,
     "category": category,
     "brand": {
       "@type": "Brand",
-      "name": "Baykasoğlu"
+      "name": "Thermapex"
     },
     "offers": {
       "@type": "AggregateOffer",
@@ -25,7 +25,7 @@ export default function ProductSchema({ name, description, image, sku, category 
       "availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",
-        "name": "Baykasoğlu Bakır"
+        "name": "Thermapex Bakır"
       }
     }
   };

@@ -7,13 +7,13 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const product = await prisma.product.findFirst({
+    const product = await prisma.products.findFirst({
       where: {
         slug: slug,
         active: true,
       },
       include: {
-        category: {
+        categories: {
           select: {
             id: true,
             name: true,

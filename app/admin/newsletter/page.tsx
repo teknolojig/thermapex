@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { Mail, Calendar, CheckCircle, XCircle } from 'lucide-react';
 
 async function getNewsletterSubscribers() {
-  const subscribers = await prisma.newsletter.findMany({
+  const subscribers = await prisma.newsletters.findMany({
     orderBy: {
       createdAt: 'desc',
     },

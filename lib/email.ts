@@ -86,7 +86,7 @@ export async function sendContactFormEmail(data: ContactFormData) {
               </div>
             </div>
             <div class="footer">
-              <p>Bu mesaj Baykasoğlu web sitesi iletişim formundan gönderilmiştir.</p>
+              <p>Bu mesaj Thermapex web sitesi iletişim formundan gönderilmiştir.</p>
               <p>Tarih: ${new Date().toLocaleString('tr-TR')}</p>
             </div>
           </div>
@@ -169,7 +169,7 @@ export async function sendQuoteRequestEmail(data: QuoteFormData) {
               ` : ''}
             </div>
             <div class="footer">
-              <p>Bu mesaj Baykasoğlu web sitesi teklif alma formundan gönderilmiştir.</p>
+              <p>Bu mesaj Thermapex web sitesi teklif alma formundan gönderilmiştir.</p>
               <p>Tarih: ${new Date().toLocaleString('tr-TR')}</p>
             </div>
           </div>
@@ -195,8 +195,8 @@ export async function sendConfirmationEmail(
 ) {
   try {
     const subject = type === 'contact'
-      ? 'Mesajınız Alındı - Baykasoğlu'
-      : 'Teklif Talebiniz Alındı - Baykasoğlu';
+      ? 'Mesajınız Alındı - Thermapex'
+      : 'Teklif Talebiniz Alındı - Thermapex';
 
     const message = type === 'contact'
       ? 'İletişim formundan gönderdiğiniz mesajınızı aldık. En kısa sürede size geri dönüş yapacağız.'
@@ -225,7 +225,7 @@ export async function sendConfirmationEmail(
         <body>
           <div class="container">
             <div class="header">
-              <h2>Baykasoğlu Bakır</h2>
+              <h2>Thermapex Bakır</h2>
             </div>
             <div class="content">
               <div class="icon">✅</div>
@@ -242,7 +242,7 @@ export async function sendConfirmationEmail(
             </div>
             <div class="footer">
               <p>Bu e-posta otomatik olarak gönderilmiştir.</p>
-              <p>&copy; ${new Date().getFullYear()} Baykasoğlu Bakır. Tüm hakları saklıdır.</p>
+              <p>&copy; ${new Date().getFullYear()} Thermapex Bakır. Tüm hakları saklıdır.</p>
             </div>
           </div>
         </body>

@@ -19,35 +19,15 @@ interface Category {
 
 // Kategori açıklamaları - her kategori için özel metin
 const CATEGORY_INFO: { [key: string]: { name: string; description: string; subtitle: string } } = {
-  'bakir-urunler/lwc-bakir-borular': {
-    name: 'LWC Bakır Boru',
-    description: 'LWC bakır borular, soğutma ve iklimlendirme sistemlerinde kullanılan yüksek kaliteli bakır boru çeşitleridir.',
-    subtitle: ''
+  'tekli-beyaz-polietilen': {
+    name: 'Tekli İzolasyonlu Bakır Boru',
+    description: '9mm beyaz polietilen izolasyonlu tekli bakır borular. Split ve VRV/VRF klima sistemleri için ideal çözüm.',
+    subtitle: 'Polietilen Bakır Boru'
   },
-  'bakir-urunler/boy-bakir-borular': {
-    name: 'Boy Bakır Boru',
-    description: 'Boy bakır borular, farklı uzunluklarda üretilen kaliteli bakır boru çeşitleridir.',
-    subtitle: ''
-  },
-  'bakir-urunler/izolasyonlu-bakir-boru': {
-    name: 'İzolasyonlu Bakır Boru',
-    description: 'İzolasyonlu bakır borular, özel kaplama ile üretilen enerji tasarruflu bakır boru çeşitleridir.',
-    subtitle: ''
-  },
-  'bakir-urunler/yivli-bakir-boru': {
-    name: 'Yivli Bakır Boru',
-    description: 'Yivli bakır borular, özel tasarımlı yüzeye sahip bakır boru çeşitleridir.',
-    subtitle: ''
-  },
-  'kangal-bakir-boru': {
-    name: 'Kangal Bakır Boru',
-    description: 'Kangal bakır borular, rulo halinde sunulan esnek bakır boru çeşitleridir.',
-    subtitle: ''
-  },
-  'bakir-pul': {
-    name: 'Bakır Pul',
-    description: 'Bakır pul ürünleri, farklı sektörlerde kullanılan kaliteli bakır levha ve rulo çeşitleridir.',
-    subtitle: ''
+  'ciftli-beyaz-polietilen': {
+    name: 'Çiftli İzolasyonlu Bakır Boru',
+    description: '9mm beyaz polietilen izolasyonlu çiftli bakır borular. Gaz ve sıvı hatları için tek pakette pratik çözüm.',
+    subtitle: 'Polietilen Bakır Boru'
   }
 };
 
@@ -58,7 +38,7 @@ interface Product {
   slug: string;
   mainImage?: string;
   specifications: any;
-  category: {
+  categories: {
     id: string;
     name: string;
     slug: string;
@@ -235,44 +215,22 @@ export default function ProductsContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white pt-24 md:pt-32 pb-20 overflow-hidden">
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_#a2602e_0%,_transparent_50%)] opacity-20 animate-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#a2602e_0%,_transparent_70%)] opacity-10" />
+      {/* Hero Section - Minimal Amber Design */}
+      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white pt-28 md:pt-36 pb-20 md:pb-24 overflow-hidden">
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(to right, #d97706 1px, transparent 1px), linear-gradient(to bottom, #d97706 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }} />
         </div>
 
-        {/* Moving Gradient Orbs */}
-        <div className="absolute inset-0 opacity-30">
-          <motion.div
-            className="absolute w-96 h-96 bg-primary rounded-full blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, -100, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{ top: '10%', right: '10%' }}
-          />
-          <motion.div
-            className="absolute w-96 h-96 bg-primary/50 rounded-full blur-3xl"
-            animate={{
-              x: [0, -100, 0],
-              y: [0, 100, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{ bottom: '10%', left: '10%' }}
-          />
-        </div>
+        {/* Corner Accents */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-3xl" />
+
+        {/* Decorative Line */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-amber-500 to-transparent" />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -281,28 +239,58 @@ export default function ProductsContent() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
+            {/* Breadcrumb Style Badge */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-6"
+              className="flex items-center gap-3 mb-6"
             >
-              <Package className="w-4 h-4" />
-              <span className="text-sm font-medium">
-                {filteredProducts.length} {currentCategory ? 'Ürün' : 'Farklı Ürün'}
+              <div className="h-px w-12 bg-amber-500" />
+              <span className="text-amber-500 font-medium text-sm uppercase tracking-wider">
+                {currentCategory ? 'Kategori' : 'Ürünler'}
               </span>
+              <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+                <Package className="w-4 h-4 text-amber-500" />
+                <span className="text-sm text-amber-400">
+                  {filteredProducts.length} Ürün
+                </span>
+              </div>
             </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-tight">
-              {getPageTitle()}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-4 leading-tight">
+              <span className="text-white">{getPageTitle()}</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+
+            <p className="text-lg md:text-xl text-stone-400 leading-relaxed max-w-2xl">
               {selectedCategory && CATEGORY_INFO[selectedCategory]
                 ? CATEGORY_INFO[selectedCategory].description
-                : 'Geniş ürün yelpazemizden ihtiyacınıza uygun bakır boruyu bulun'}
+                : 'Polietilen izolasyonlu bakır boru çeşitlerimizi inceleyin'}
             </p>
+
+            {/* Quick Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-wrap gap-6 mt-8"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                <span className="text-stone-400 text-sm">EN 12735 Sertifikalı</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                <span className="text-stone-400 text-sm">9mm Polietilen İzolasyon</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                <span className="text-stone-400 text-sm">Hızlı Teslimat</span>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
+
       </section>
 
       {/* Search Bar */}
@@ -458,7 +446,7 @@ export default function ProductsContent() {
                           {/* Category Badge */}
                           <div className="absolute top-3 left-3">
                             <span className="px-3 py-1 text-xs font-medium bg-primary/90 text-white rounded-full backdrop-blur-sm">
-                              {product.category.name}
+                              {product.categories.name}
                             </span>
                           </div>
                         </div>

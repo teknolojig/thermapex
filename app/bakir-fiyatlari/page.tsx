@@ -56,7 +56,7 @@ export default function CopperPricesPage() {
                 </motion.a>
 
                 <motion.a
-                  href="mailto:info@baykasoglu.com"
+                  href="mailto:info@thermapex.com"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
@@ -66,7 +66,7 @@ export default function CopperPricesPage() {
                   <Mail className="w-8 h-8 text-primary mb-4 mx-auto" />
                   <h3 className="text-white font-semibold mb-2">E-posta</h3>
                   <p className="text-white/70 text-sm mb-3">Teklif isteyin</p>
-                  <p className="text-primary font-bold text-lg">info@baykasoglu.com</p>
+                  <p className="text-primary font-bold text-lg">info@thermapex.com</p>
                 </motion.a>
               </div>
             </motion.div>
