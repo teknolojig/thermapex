@@ -7,9 +7,12 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
+    // URL'den gelen slug'ı decode et
+    const decodedSlug = decodeURIComponent(slug);
+
     const product = await prisma.products.findFirst({
       where: {
-        slug: slug,
+        slug: decodedSlug,
         active: true,
       },
       include: {

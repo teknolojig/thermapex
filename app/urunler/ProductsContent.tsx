@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,6 +28,11 @@ const CATEGORY_INFO: { [key: string]: { name: string; description: string; subti
     name: 'Çiftli İzolasyonlu Bakır Boru',
     description: '9mm beyaz polietilen izolasyonlu çiftli bakır borular. Gaz ve sıvı hatları için tek pakette pratik çözüm.',
     subtitle: 'Polietilen Bakır Boru'
+  },
+  'kaucuk-izolasyonlu-bakir-boru': {
+    name: 'Kauçuk İzolasyonlu Bakır Boru',
+    description: '13mm siyah kauçuk izolasyonlu bakır borular. Split ve VRF klima sistemleri için profesyonel çözüm.',
+    subtitle: 'Kauçuk Bakır Boru'
   }
 };
 
@@ -47,6 +52,7 @@ interface Product {
 
 export default function ProductsContent() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
@@ -59,8 +65,14 @@ export default function ProductsContent() {
   const [specFilters, setSpecFilters] = useState<{ [key: string]: Set<string> }>({});
   const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string }>({});
 
-  // Get page title immediately from pathname (for instant display)
+  // Get page title immediately from pathname or query (for instant display)
   const getPageTitle = () => {
+    // Önce query parameter kontrol et
+    const categoryFromQuery = searchParams.get('category');
+    if (categoryFromQuery && CATEGORY_INFO[categoryFromQuery]) {
+      return CATEGORY_INFO[categoryFromQuery].name;
+    }
+
     if (pathname.startsWith('/urun-kategori/')) {
       const categorySlug = pathname.replace('/urun-kategori/', '');
       if (CATEGORY_INFO[categorySlug]) {
@@ -70,15 +82,20 @@ export default function ProductsContent() {
     return currentCategory ? currentCategory.name : 'Ürünlerimiz';
   };
 
-  // Kategoriyi al - pathname'den
+  // Kategoriyi al - pathname veya query parameter'dan
   useEffect(() => {
     let categorySlug = '';
 
-    // Eğer pathname /urun-kategori ile başlıyorsa
-    if (pathname.startsWith('/urun-kategori/')) {
-      // Full path'i al (örn: /urun-kategori/bakir-urunler/lwc-bakir-borular -> bakir-urunler/lwc-bakir-borular)
+    // Önce query parameter kontrol et (?category=xxx)
+    const categoryFromQuery = searchParams.get('category');
+    if (categoryFromQuery) {
+      categorySlug = categoryFromQuery;
+      console.log('📍 Category from query parameter:', categorySlug);
+    }
+    // Eğer query yoksa pathname kontrol et
+    else if (pathname.startsWith('/urun-kategori/')) {
       categorySlug = pathname.replace('/urun-kategori/', '');
-      console.log('📍 Category from pathname (FULL PATH):', categorySlug);
+      console.log('📍 Category from pathname:', categorySlug);
     }
 
     if (categorySlug) {
@@ -91,7 +108,7 @@ export default function ProductsContent() {
     }
 
     fetchCategories();
-  }, [pathname]);
+  }, [pathname, searchParams]);
 
   // Kategoriler yüklendiğinde current category'yi set et
   useEffect(() => {

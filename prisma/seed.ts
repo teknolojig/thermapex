@@ -83,9 +83,25 @@ async function main() {
     { code: 'THERMP00021', olcu: '7/8x1,00mm', sistem: 'VRV' },
   ];
 
-  // Slug oluşturma fonksiyonu
+  // Slug oluşturma fonksiyonu - Türkçe karakterleri ASCII'ye çevir
   const createSlug = (olcu: string, sistem: string, tip: string) => {
-    return `${tip}-${olcu.replace(/[\/x,]/g, '-').replace(/\./g, '').toLowerCase()}-${sistem.toLowerCase()}`;
+    const turkishToAscii = (str: string) => {
+      return str
+        .replace(/İ/g, 'I')
+        .replace(/ı/g, 'i')
+        .replace(/Ğ/g, 'G')
+        .replace(/ğ/g, 'g')
+        .replace(/Ü/g, 'U')
+        .replace(/ü/g, 'u')
+        .replace(/Ş/g, 'S')
+        .replace(/ş/g, 's')
+        .replace(/Ö/g, 'O')
+        .replace(/ö/g, 'o')
+        .replace(/Ç/g, 'C')
+        .replace(/ç/g, 'c')
+        .toLowerCase();
+    };
+    return `${tip}-${olcu.replace(/[\/x,]/g, '-').replace(/\./g, '').toLowerCase()}-${turkishToAscii(sistem)}`;
   };
 
   // Çiftli ürünleri ekle

@@ -9,12 +9,16 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
+  // URL'den gelen slug'ı decode et ve normalize et
+  const decodedSlug = decodeURIComponent(slug);
+
   try {
-    const product = await prisma.products.findUnique({
-      where: { slug },
+    const product = await prisma.products.findFirst({
+      where: { slug: decodedSlug },
       select: {
         name: true,
         code: true,
+        slug: true,
         specifications: true,
         categories: {
           select: {
@@ -74,14 +78,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       keywords: keywords.join(', '),
       alternates: {
-        canonical: `https://thermapex.com/urun/${slug}`,
+        canonical: `https://thermapex.com/urun/${encodeURIComponent(product.slug)}`,
       },
       openGraph: {
         title,
         description,
         type: 'website',
         locale: 'tr_TR',
-        url: `https://thermapex.com/urun/${slug}`,
+        url: `https://thermapex.com/urun/${encodeURIComponent(product.slug)}`,
       },
     };
   } catch (error) {
