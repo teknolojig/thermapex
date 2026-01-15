@@ -41,7 +41,7 @@ interface Product {
   name: string;
   code: string;
   slug: string;
-  mainImage?: string;
+  mainImage?: string | null;
   specifications: any;
   categories: {
     id: string;
@@ -50,20 +50,35 @@ interface Product {
   };
 }
 
-export default function ProductsContent() {
+interface ProductsContentProps {
+  initialCategories?: Category[];
+  initialProducts?: Product[];
+  initialCategorySlug?: string;
+}
+
+export default function ProductsContent({
+  initialCategories = [],
+  initialProducts = [],
+  initialCategorySlug = ''
+}: ProductsContentProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [currentCategory, setCurrentCategory] = useState<Category | null>(
+    initialCategorySlug
+      ? initialCategories.find(c => c.slug === initialCategorySlug) || null
+      : null
+  );
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategorySlug);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [specFilters, setSpecFilters] = useState<{ [key: string]: Set<string> }>({});
   const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string }>({});
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Get page title immediately from pathname or query (for instant display)
   const getPageTitle = () => {
@@ -82,6 +97,13 @@ export default function ProductsContent() {
     return currentCategory ? currentCategory.name : 'Ürünlerimiz';
   };
 
+  // Extract spec filters from initial products
+  useEffect(() => {
+    if (initialProducts.length > 0 && isInitialLoad) {
+      extractSpecificationFilters(initialProducts);
+    }
+  }, []);
+
   // Kategoriyi al - pathname veya query parameter'dan
   useEffect(() => {
     let categorySlug = '';
@@ -90,13 +112,19 @@ export default function ProductsContent() {
     const categoryFromQuery = searchParams.get('category');
     if (categoryFromQuery) {
       categorySlug = categoryFromQuery;
-      console.log('📍 Category from query parameter:', categorySlug);
     }
     // Eğer query yoksa pathname kontrol et
     else if (pathname.startsWith('/urun-kategori/')) {
       categorySlug = pathname.replace('/urun-kategori/', '');
-      console.log('📍 Category from pathname:', categorySlug);
     }
+
+    // Skip fetch on initial load if we have initial data matching the URL
+    if (isInitialLoad && categorySlug === initialCategorySlug) {
+      setIsInitialLoad(false);
+      return;
+    }
+
+    setIsInitialLoad(false);
 
     if (categorySlug) {
       setSelectedCategory(categorySlug);
@@ -107,7 +135,10 @@ export default function ProductsContent() {
       fetchProductsForCategory('');
     }
 
-    fetchCategories();
+    // Only fetch categories if we don't have them
+    if (categories.length === 0) {
+      fetchCategories();
+    }
   }, [pathname, searchParams]);
 
   // Kategoriler yüklendiğinde current category'yi set et
