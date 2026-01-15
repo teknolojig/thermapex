@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, FileText } from 'lucide-react';
+import { Phone, FileText, Info, Circle, Layers, Shield, Mail } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from '@/components/QuoteModal';
 
@@ -32,7 +32,7 @@ export default function DesktopHeader() {
           layout
           className={`transition-all duration-500 ${
             isScrolled
-              ? 'max-w-6xl bg-white/95 backdrop-blur-md shadow-lg rounded-full px-10 py-5'
+              ? 'w-[95%] max-w-7xl bg-white/95 backdrop-blur-md shadow-lg rounded-full px-10 py-4'
               : 'container mx-auto px-4'
           }`}
         >
@@ -89,16 +89,17 @@ export default function DesktopHeader() {
             </Link>
 
             {/* Desktop Navigation with Modern Hover Effects */}
-            <nav className="flex items-center gap-3">
+            <nav className="flex items-center gap-4">
               {/* Hakkımızda Link */}
               <Link
                 href="/hakkimizda"
-                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-2 py-2 flex items-center gap-1.5 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
+                <Info className="w-3.5 h-3.5" />
                 <span className="relative z-10">Hakkımızda</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
@@ -111,12 +112,13 @@ export default function DesktopHeader() {
               {/* Tekli İzolasyonlu Link */}
               <Link
                 href="/urunler?category=tekli-beyaz-polietilen"
-                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-2 py-2 flex items-center gap-1.5 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
+                <Circle className="w-3.5 h-3.5" />
                 <span className="relative z-10">Tekli İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
@@ -129,12 +131,13 @@ export default function DesktopHeader() {
               {/* Çiftli İzolasyonlu Link */}
               <Link
                 href="/urunler?category=ciftli-beyaz-polietilen"
-                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-2 py-2 flex items-center gap-1.5 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
+                <Layers className="w-3.5 h-3.5" />
                 <span className="relative z-10">Çiftli İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
@@ -147,12 +150,13 @@ export default function DesktopHeader() {
               {/* Kauçuk İzolasyonlu Link */}
               <Link
                 href="/urunler?category=kaucuk-izolasyonlu-bakir-boru"
-                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-2 py-2 flex items-center gap-1.5 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
+                <Shield className="w-3.5 h-3.5" />
                 <span className="relative z-10">Kauçuk İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
@@ -165,12 +169,13 @@ export default function DesktopHeader() {
               {/* İletişim Link */}
               <Link
                 href="/iletisim"
-                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-2 py-2 flex items-center gap-1.5 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
+                <Mail className="w-3.5 h-3.5" />
                 <span className="relative z-10">İletişim</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
