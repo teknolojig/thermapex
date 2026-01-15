@@ -15,7 +15,7 @@ async function main() {
       name: 'Çiftli Beyaz Polietilen',
       slug: 'ciftli-beyaz-polietilen',
       description: '9mm Çiftli Beyaz Polietilen İzolasyonlu Bakır Borular - Split ve VRV sistemler için',
-      image: '/images/categories/ciftli.jpg',
+      image: '/images/products/cift.jpg',
       order: 1,
       active: true,
       updatedAt: new Date(),
@@ -30,14 +30,29 @@ async function main() {
       name: 'Tekli Beyaz Polietilen',
       slug: 'tekli-beyaz-polietilen',
       description: '9mm Tekli Beyaz Polietilen İzolasyonlu Bakır Borular - Split ve VRV sistemler için',
-      image: '/images/categories/tekli.jpg',
+      image: '/images/products/tek.jpg',
       order: 2,
       active: true,
       updatedAt: new Date(),
     },
   });
 
-  console.log('Kategoriler oluşturuldu:', { ciftliKategori, tekliKategori });
+  const kaucukKategori = await prisma.categories.upsert({
+    where: { slug: 'kaucuk-izolasyonlu-bakir-boru' },
+    update: {},
+    create: {
+      id: 'cat-kaucuk',
+      name: 'Kauçuk İzolasyonlu Bakır Boru',
+      slug: 'kaucuk-izolasyonlu-bakir-boru',
+      description: '13mm Siyah Kauçuk İzolasyonlu Bakır Borular - Split ve VRF sistemler için',
+      image: '/images/products/kaucuk.jpg',
+      order: 3,
+      active: true,
+      updatedAt: new Date(),
+    },
+  });
+
+  console.log('Kategoriler oluşturuldu:', { ciftliKategori, tekliKategori, kaucukKategori });
 
   // Çiftli Ürünler
   const ciftliUrunler = [
@@ -88,7 +103,7 @@ async function main() {
         code: urun.code,
         slug: slug,
         description: `9mm Çiftli Beyaz Polietilen İzolasyonlu Bakır Boru - Ölçü: ${urun.olcu} - Sistem: ${urun.sistem} - Menşei: Türkiye`,
-        mainImage: '/images/products/ciftli-default.jpg',
+        mainImage: '/images/products/cift.jpg',
         images: [],
         specifications: {
           marka: 'THERMAPEX',
@@ -124,7 +139,7 @@ async function main() {
         code: urun.code,
         slug: slug,
         description: `9mm Tekli Beyaz Polietilen İzolasyonlu Bakır Boru - Ölçü: ${urun.olcu} - Sistem: ${urun.sistem} - Menşei: Türkiye`,
-        mainImage: '/images/products/tekli-default.jpg',
+        mainImage: '/images/products/tek.jpg',
         images: [],
         specifications: {
           marka: 'THERMAPEX',
@@ -145,7 +160,56 @@ async function main() {
     });
   }
 
-  console.log('Ürünler oluşturuldu: 21 ürün');
+  // Kauçuk Ürünler
+  const kaucukUrunler = [
+    { code: 'THERMP00022', olcu: '1/4x0,70mm', sistem: 'SPLİT' },
+    { code: 'THERMP00023', olcu: '3/8x0,70mm', sistem: 'SPLİT' },
+    { code: 'THERMP00024', olcu: '1/2x0,70mm', sistem: 'SPLİT' },
+    { code: 'THERMP00025', olcu: '5/8x0,80mm', sistem: 'SPLİT' },
+    { code: 'THERMP00026', olcu: '1/4x0,80mm', sistem: 'VRF' },
+    { code: 'THERMP00027', olcu: '3/8x0,80mm', sistem: 'VRF' },
+    { code: 'THERMP00028', olcu: '1/2x0,80mm', sistem: 'VRF' },
+    { code: 'THERMP00029', olcu: '5/8x1,00mm', sistem: 'VRF' },
+    { code: 'THERMP00030', olcu: '7/8x1,00mm', sistem: 'VRF' },
+  ];
+
+  // Kauçuk ürünleri ekle
+  for (let i = 0; i < kaucukUrunler.length; i++) {
+    const urun = kaucukUrunler[i];
+    const slug = createSlug(urun.olcu, urun.sistem, 'kaucuk');
+
+    await prisma.products.upsert({
+      where: { code: urun.code },
+      update: {},
+      create: {
+        id: `prod-${urun.code.toLowerCase()}`,
+        categoryId: kaucukKategori.id,
+        name: `Kauçuk İzolasyonlu Bakır Boru ${urun.olcu}`,
+        code: urun.code,
+        slug: slug,
+        description: `13mm Siyah Kauçuk İzolasyonlu Bakır Boru - Ölçü: ${urun.olcu} - Sistem: ${urun.sistem} - Menşei: Türkiye`,
+        mainImage: '/images/products/kaucuk.jpg',
+        images: [],
+        specifications: {
+          marka: 'THERMAPEX',
+          izolasyonTuru: '13mm Siyah Kauçuk',
+          boruTipi: 'Kauçuk İzolasyonlu Bakır Boru',
+          olcu: urun.olcu,
+          sistem: urun.sistem,
+          mensei: 'Türkiye',
+        },
+        metaTitle: `${urun.olcu} Kauçuk İzolasyonlu Bakır Boru | Thermapex`,
+        metaDescription: `Thermapex ${urun.olcu} ölçüsünde 13mm siyah kauçuk izolasyonlu bakır boru. ${urun.sistem} sistemler için ideal. Türkiye menşeli, yüksek kalite.`,
+        metaKeywords: `kauçuk bakır boru, kauçuk izolasyonlu bakır boru, ${urun.olcu}, ${urun.sistem}, siyah kauçuk izolasyon`,
+        featured: i < 3,
+        active: true,
+        order: i + 1,
+        updatedAt: new Date(),
+      },
+    });
+  }
+
+  console.log('Ürünler oluşturuldu: 30 ürün');
 
   // Admin kullanıcı oluştur
   const hashedPassword = await bcrypt.hash('admin123', 10);

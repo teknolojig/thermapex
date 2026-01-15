@@ -17,6 +17,7 @@ export default function Footer() {
   const productLinks = [
     { name: 'Tekli İzolasyonlu', href: '/urunler?category=tekli-beyaz-polietilen' },
     { name: 'Çiftli İzolasyonlu', href: '/urunler?category=ciftli-beyaz-polietilen' },
+    { name: 'Kauçuk İzolasyonlu', href: '/urunler?category=kaucuk-izolasyonlu-bakir-boru' },
     { name: 'Tüm Ürünler', href: '/urunler' },
   ];
 

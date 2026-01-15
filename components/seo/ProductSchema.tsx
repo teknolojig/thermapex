@@ -25,7 +25,7 @@ export default function ProductSchema({ name, description, image, sku, category 
       "availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",
-        "name": "Thermapex Bakır"
+        "name": "Baykasoğlu Bakır A.Ş."
       }
     }
   };

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, Circle, Layers } from 'lucide-react';
+import { ArrowRight, Circle, Layers, Shield } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -13,7 +13,7 @@ const products = [
     title: 'Tekli İzolasyonlu',
     subtitle: 'Polietilen Bakır Boru',
     description: '9mm beyaz polietilen izolasyonlu tekli bakır borular. Split ve VRV sistemler için ideal.',
-    image: '/tekli.png',
+    image: '/images/products/tek.jpg',
     link: '/urunler?category=tekli-beyaz-polietilen',
     icon: Circle,
     gradient: 'from-amber-500/20 to-orange-600/20',
@@ -24,11 +24,22 @@ const products = [
     title: 'Çiftli İzolasyonlu',
     subtitle: 'Polietilen Bakır Boru',
     description: '9mm beyaz polietilen izolasyonlu çiftli bakır borular. Gaz ve sıvı hatları için tek pakette.',
-    image: '/tekli.png',
+    image: '/images/products/cift.jpg',
     link: '/urunler?category=ciftli-beyaz-polietilen',
     icon: Layers,
     gradient: 'from-orange-500/20 to-amber-600/20',
     borderColor: 'border-orange-500/30',
+  },
+  {
+    id: 'kaucuk',
+    title: 'Kauçuk İzolasyonlu',
+    subtitle: 'Bakır Boru',
+    description: '13mm siyah kauçuk izolasyonlu bakır borular. Split ve VRF sistemler için profesyonel çözüm.',
+    image: '/images/products/kaucuk.jpg',
+    link: '/urunler?category=kaucuk-izolasyonlu-bakir-boru',
+    icon: Shield,
+    gradient: 'from-stone-500/20 to-stone-600/20',
+    borderColor: 'border-stone-500/30',
   },
 ];
 
@@ -74,7 +85,7 @@ export default function ProductsSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
         >
           {products.map((product, index) => {
             const Icon = product.icon;

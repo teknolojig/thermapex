@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, FileText, Menu, X, Home, Info, Mail, Circle, Layers, MessageCircle } from 'lucide-react';
+import { Phone, FileText, Menu, X, Home, Info, Mail, Circle, Layers, MessageCircle, Shield } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from '@/components/QuoteModal';
 
@@ -236,6 +236,22 @@ export default function MobileHeader() {
                     >
                       <Layers className="w-6 h-6 group-hover:scale-110 transition-transform" />
                       <span className="text-xl font-semibold">Çiftli İzolasyonlu</span>
+                    </Link>
+                  </motion.div>
+
+                  {/* Kauçuk İzolasyonlu Link */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.47 }}
+                  >
+                    <Link
+                      href="/urunler?category=kaucuk-izolasyonlu-bakir-boru"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-4 px-6 py-4 text-white hover:bg-white/10 rounded-2xl transition-all group"
+                    >
+                      <Shield className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                      <span className="text-xl font-semibold">Kauçuk İzolasyonlu</span>
                     </Link>
                   </motion.div>
 

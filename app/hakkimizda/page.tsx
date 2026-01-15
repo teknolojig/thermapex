@@ -95,7 +95,7 @@ export default function AboutPage() {
                     <div className="relative w-48 h-48 rounded-2xl overflow-hidden shadow-xl">
                       <Image
                         src="/images/hakkkimizda-100.jpg"
-                        alt="Thermapex Bakır Logo"
+                        alt="Thermapex Logo"
                         fill
                         className="object-cover"
                       />
@@ -103,7 +103,7 @@ export default function AboutPage() {
                   </div>
 
                   <h2 className="text-3xl font-bold font-heading text-gray-900 mb-4 text-center">
-                    Thermapex Bakır A.Ş.
+                    Baykasoğlu Bakır A.Ş.
                   </h2>
 
                   <p className="text-gray-600 text-center mb-6">
@@ -180,7 +180,7 @@ export default function AboutPage() {
                   </h3>
 
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    Zengin stok çeşitliliği, uygun fiyat politikası, hızlı ve güleryüzlü hizmeti ile daima bir adım önde olmayı hedefleyen <strong>Thermapex Bakır A.Ş.</strong> her geçen gün, hedeflerine bir adım daha yaklaşmıştır.
+                    Zengin stok çeşitliliği, uygun fiyat politikası, hızlı ve güleryüzlü hizmeti ile daima bir adım önde olmayı hedefleyen <strong>Baykasoğlu Bakır A.Ş.</strong> her geçen gün, hedeflerine bir adım daha yaklaşmıştır.
                   </p>
 
                   <p className="text-gray-700 leading-relaxed">
@@ -202,7 +202,7 @@ export default function AboutPage() {
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl font-bold font-heading text-gray-900 mb-4">
-                Neden Thermapex Bakır?
+                Neden Thermapex?
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Sektördeki tecrübemiz ve müşteri odaklı yaklaşımımızla fark yaratıyoruz

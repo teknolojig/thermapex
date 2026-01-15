@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     console.error('Error generating metadata:', error);
     return {
       title: 'Bakır Boru Ürünleri | Thermapex',
-      description: 'Thermapex Bakır ürünlerini keşfedin.',
+      description: 'Thermapex ürünlerini keşfedin.',
     };
   }
 }

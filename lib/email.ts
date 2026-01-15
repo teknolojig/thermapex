@@ -225,7 +225,7 @@ export async function sendConfirmationEmail(
         <body>
           <div class="container">
             <div class="header">
-              <h2>Thermapex Bakır</h2>
+              <h2>Thermapex</h2>
             </div>
             <div class="content">
               <div class="icon">✅</div>
@@ -242,7 +242,7 @@ export async function sendConfirmationEmail(
             </div>
             <div class="footer">
               <p>Bu e-posta otomatik olarak gönderilmiştir.</p>
-              <p>&copy; ${new Date().getFullYear()} Thermapex Bakır. Tüm hakları saklıdır.</p>
+              <p>&copy; ${new Date().getFullYear()} Thermapex. Tüm hakları saklıdır.</p>
             </div>
           </div>
         </body>

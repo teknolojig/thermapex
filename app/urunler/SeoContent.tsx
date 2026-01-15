@@ -412,10 +412,10 @@ export function getSeoContent(categorySlug: string): React.ReactNode {
     'bakir-urunler': (
       <>
         <p>
-          Thermapex Bakır A.Ş., yarım asırlık tecrübesi ile Türkiye'nin önde gelen bakır üreticilerinden biridir. HVAC, inşaat, elektrik-elektronik ve endüstriyel sektörlere yüksek kaliteli bakır ürünler sunmaktayız.
+          Baykasoğlu Bakır A.Ş., yarım asırlık tecrübesi ile Türkiye'nin önde gelen bakır üreticilerinden biridir. HVAC, inşaat, elektrik-elektronik ve endüstriyel sektörlere yüksek kaliteli bakır ürünler sunmaktayız.
         </p>
 
-        <h3 className="text-xl font-bold text-gray-900 mb-4 mt-6">Thermapex Bakır Hakkında</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4 mt-6">Thermapex Hakkında</h3>
         <p>
           1970 yılından bu yana Türkiye'nin lider bakır üreticilerinden biri olarak, modern tesislerimizde uluslararası standartlara uygun üretim yapmaktayız. 50.000 m² kapalı alana sahip tesislerimizde, yıllık 75.000 ton üretim kapasitesi ile hizmet vermekteyiz.
         </p>
@@ -495,7 +495,7 @@ export function getSeoContent(categorySlug: string): React.ReactNode {
   return seoContents[shortSlug] || (
     <>
       <p>
-        <strong>Thermapex Bakır A.Ş.</strong>, yüksek kaliteli bakır ürünleri ile sektörde öncü konumda bulunmaktadır.
+        <strong>Baykasoğlu Bakır A.Ş.</strong>, yüksek kaliteli bakır ürünleri ile sektörde öncü konumda bulunmaktadır.
         Bu kategorideki ürünlerimiz, uluslararası standartlara uygun olarak üretilmekte ve çeşitli endüstriyel uygulamalarda güvenle kullanılmaktadır.
       </p>
       <p>

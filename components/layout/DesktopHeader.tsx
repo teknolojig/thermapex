@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, FileText, Info, Circle, Layers, Mail } from 'lucide-react';
+import { Phone, FileText, Info, Circle, Layers, Mail, Shield } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from '@/components/QuoteModal';
 
@@ -139,6 +139,25 @@ export default function DesktopHeader() {
               >
                 <Layers className="w-4 h-4" />
                 <span className="relative z-10">Çiftli İzolasyonlu</span>
+                <motion.span
+                  className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </Link>
+
+              {/* Kauçuk İzolasyonlu Link */}
+              <Link
+                href="/urunler?category=kaucuk-izolasyonlu-bakir-boru"
+                className={`relative font-medium transition-all duration-300 px-1 py-2 flex items-center gap-2 ${
+                  isScrolled
+                    ? 'text-foreground/80 hover:text-primary'
+                    : 'text-white/90 hover:text-white'
+                }`}
+              >
+                <Shield className="w-4 h-4" />
+                <span className="relative z-10">Kauçuk İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
                   initial={{ scaleX: 0 }}
