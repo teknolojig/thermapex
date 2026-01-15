@@ -89,11 +89,11 @@ export default function DesktopHeader() {
             </Link>
 
             {/* Desktop Navigation with Modern Hover Effects */}
-            <nav className="flex items-center gap-4">
+            <nav className="flex items-center gap-3">
               {/* Hakkımızda Link */}
               <Link
                 href="/hakkimizda"
-                className={`relative text-sm font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
@@ -111,13 +111,13 @@ export default function DesktopHeader() {
               {/* Tekli İzolasyonlu Link */}
               <Link
                 href="/urunler?category=tekli-beyaz-polietilen"
-                className={`relative text-sm font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
-                <span className="relative z-10">Tekli</span>
+                <span className="relative z-10">Tekli İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
                   initial={{ scaleX: 0 }}
@@ -129,13 +129,13 @@ export default function DesktopHeader() {
               {/* Çiftli İzolasyonlu Link */}
               <Link
                 href="/urunler?category=ciftli-beyaz-polietilen"
-                className={`relative text-sm font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
-                <span className="relative z-10">Çiftli</span>
+                <span className="relative z-10">Çiftli İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
                   initial={{ scaleX: 0 }}
@@ -147,13 +147,13 @@ export default function DesktopHeader() {
               {/* Kauçuk İzolasyonlu Link */}
               <Link
                 href="/urunler?category=kaucuk-izolasyonlu-bakir-boru"
-                className={`relative text-sm font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 }`}
               >
-                <span className="relative z-10">Kauçuk</span>
+                <span className="relative z-10">Kauçuk İzolasyonlu</span>
                 <motion.span
                   className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-full"
                   initial={{ scaleX: 0 }}
@@ -165,7 +165,7 @@ export default function DesktopHeader() {
               {/* İletişim Link */}
               <Link
                 href="/iletisim"
-                className={`relative text-sm font-medium transition-all duration-300 px-1 py-2 ${
+                className={`relative text-xs font-medium transition-all duration-300 px-1 py-2 ${
                   isScrolled
                     ? 'text-foreground/80 hover:text-primary'
                     : 'text-white/90 hover:text-white'
